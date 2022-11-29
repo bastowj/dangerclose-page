@@ -8,7 +8,7 @@ import "swiper/css";
 export default function showcase() {
   SwiperCore.use([Autoplay]);
   return (
-    <div className="container mx-auto max-w-6xl py-16 md:px-20">
+    <div className="container mx-auto max-w-6xl pt-8 pb-16 md:px-20 md:pt-16">
       <h1 className="pb-12 text-center text-3xl font-bold">Showcase</h1>
       <Swiper
         slidesPerView={1}
@@ -29,7 +29,7 @@ export default function showcase() {
 
 function Slide() {
   return (
-    <div className="mx-10 grid grid-cols-1 place-items-center md:grid-cols-2">
+    <div className="mx-20 grid grid-cols-1 place-items-center md:grid-cols-2">
       <div className="image">
         <Link href={"/"}>
           <Image
