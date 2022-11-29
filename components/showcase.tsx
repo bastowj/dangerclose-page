@@ -11,6 +11,7 @@ export default function showcase() {
     <div className="container mx-auto py-16 md:px-20">
       <h1 className="pb-12 text-center text-3xl font-bold">Showcase</h1>
       <Swiper
+        className="container mx-auto"
         slidesPerView={1}
         loop={true}
         autoplay={{
@@ -29,14 +30,15 @@ export default function showcase() {
 
 function Slide() {
   return (
-    <div className="grid md:grid-cols-2">
+    <div className="grid md:grid-cols-2 place-items-center">
       <div className="image">
         <Link href={"/"}>
           <Image
-            src={"/images/image.jpg"}
+            src={"/images/showcase1.jpg"}
             width={600}
             height={600}
             alt="image"
+            className="rounded-full"
           />
         </Link>
       </div>
