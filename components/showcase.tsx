@@ -1,12 +1,12 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
-import {Swiper, SwiperSlide} from 'swiper/react'
-import SwiperCore, { Autoplay } from 'swiper'
-import 'swiper/css'
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Autoplay } from "swiper";
+import "swiper/css";
 
 export default function showcase() {
-  SwiperCore.use([Autoplay])
+  SwiperCore.use([Autoplay]);
   return (
     <div className="container mx-auto py-16 md:px-20">
       <h1 className="pb-12 text-center text-3xl font-bold">Showcase</h1>
@@ -14,16 +14,15 @@ export default function showcase() {
         slidesPerView={1}
         loop={true}
         autoplay={{
-          delay: 4000
+          delay: 4000,
         }}
-        >
-      <SwiperSlide>{Slide()}</SwiperSlide>
-      <SwiperSlide>{Slide()}</SwiperSlide>
-      <SwiperSlide>{Slide()}</SwiperSlide>
-      <SwiperSlide>{Slide()}</SwiperSlide>
-      <SwiperSlide>{Slide()}</SwiperSlide>
-    </Swiper>
-        
+      >
+        <SwiperSlide>{Slide()}</SwiperSlide>
+        <SwiperSlide>{Slide()}</SwiperSlide>
+        <SwiperSlide>{Slide()}</SwiperSlide>
+        <SwiperSlide>{Slide()}</SwiperSlide>
+        <SwiperSlide>{Slide()}</SwiperSlide>
+      </Swiper>
     </div>
   );
 }
@@ -31,17 +30,26 @@ export default function showcase() {
 function Slide() {
   return (
     <div className="grid md:grid-cols-2">
-        <div className="image">
-            <Link href={"/"}><Image src={"/images/image.jpg"} width={600} height={600} alt="image" /></Link>
+      <div className="image">
+        <Link href={"/"}>
+          <Image
+            src={"/images/image.jpg"}
+            width={600}
+            height={600}
+            alt="image"
+          />
+        </Link>
+      </div>
+      <div className="info">
+        <div className="cat">
+          <Link href={"/"}>Categories - Date</Link>
         </div>
-        <div className="info">
-            <div className="cat">
-                <Link href={"/"}>Categories - Date</Link>
-            </div>
-            <div className="title">
-                <Link href={"/"} className="text-3xl md:text-6xl">Title</Link>
-            </div>
+        <div className="title">
+          <Link href={"/"} className="text-3xl md:text-6xl">
+            Title
+          </Link>
         </div>
+      </div>
     </div>
-  )
+  );
 }
