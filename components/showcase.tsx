@@ -8,10 +8,9 @@ import "swiper/css";
 export default function showcase() {
   SwiperCore.use([Autoplay]);
   return (
-    <div className="container mx-auto py-16 md:px-20">
+    <div className="container mx-auto max-w-6xl py-16 md:px-20">
       <h1 className="pb-12 text-center text-3xl font-bold">Showcase</h1>
       <Swiper
-        className="container mx-auto"
         slidesPerView={1}
         loop={true}
         autoplay={{
@@ -30,25 +29,32 @@ export default function showcase() {
 
 function Slide() {
   return (
-    <div className="grid place-items-center md:grid-cols-2">
+    <div className="mx-20 grid grid-cols-1 place-items-center gap-10 md:grid-cols-2">
       <div className="image">
         <Link href={"/"}>
           <Image
             src={"/images/showcase1.jpg"}
-            width={600}
-            height={600}
+            width={400}
+            height={400}
             alt="image"
-            className="rounded-full"
+            className="rounded-full "
           />
         </Link>
       </div>
       <div className="info">
-        <div className="cat">
+        <div className="cat mb-2">
           <Link href={"/"}>Categories - Date</Link>
         </div>
-        <div className="title">
-          <Link href={"/"} className="text-3xl md:text-6xl">
-            Title
+        <div className="title mb-5">
+          <Link href={"/"} className="text-3xl md:text-4xl">
+            Lorem ipsum
+          </Link>
+        </div>
+        <div className="description">
+          <Link href={"/"} className="">
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua.
           </Link>
         </div>
       </div>
