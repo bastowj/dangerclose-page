@@ -3,7 +3,7 @@ import Header from "./header";
 import Footer from "./footer";
 
 type LayoutProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   title?: string;
 };
 

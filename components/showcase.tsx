@@ -30,7 +30,7 @@ export default function showcase() {
 
 function Slide() {
   return (
-    <div className="grid md:grid-cols-2 place-items-center">
+    <div className="grid place-items-center md:grid-cols-2">
       <div className="image">
         <Link href={"/"}>
           <Image
