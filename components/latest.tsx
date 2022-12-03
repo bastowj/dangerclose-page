@@ -6,7 +6,7 @@ export default function latest() {
     <div className="container mx-auto py-16 md:px-20">
       <>
         <h1 className="pb-12 text-center text-3xl font-bold">Latest Posts</h1>
-        <div className="grid gap-14 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-14 md:grid-cols-2 lg:grid-cols-3">
           {Post()}
           {Post()}
           {Post()}
