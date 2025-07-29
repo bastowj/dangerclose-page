@@ -1,4 +1,3 @@
-import { FaInstagram, FaMastodon } from "react-icons/fa";
 import Link from "next/link";
 
 export default function header() {
@@ -12,12 +11,8 @@ export default function header() {
         </div>
         <div className="order-2 flex w-96 justify-center">
           <div className="flex gap-6">
-            <Link href={"/"}>
-              <FaInstagram color="c0c0c0" />
-            </Link>
-            <Link href={"/"}>
-              <FaMastodon color="c0c0c0" />
-            </Link>
+            <Link href={"/"}>Instagram</Link>
+            <Link href={"/"}>Instagram</Link>
           </div>
         </div>
       </div>

@@ -1,16 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Included
-
-- TailwindCSS - [https://https://tailwindcss.com/docs/](https://tailwindcss.com/docs/)
-  - @tailwindcss/aspect-ratio
-  - @tailwindcss/forms,
-  - @tailwindcss/line-clamp
-  - @tailwindcss/typography
-- daisyUI
-- prettier
-- react-icons
-
 ## Getting Started
 
 First, run the development server:
