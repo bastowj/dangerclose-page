@@ -5,28 +5,38 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev      # Start dev server (localhost:3000)
+npm run dev      # Start dev server with Turbopack (localhost:3000)
 npm run build    # Production build
 npm run lint     # ESLint
-npm run format   # Prettier formatting
+npm run format   # Auto-format with Prettier
+npm test         # Run Jest tests
 ```
 
 ## Architecture
 
-Next.js 15 portfolio/blog site for "Danger Close! Painting". Uses the App Router (`src/app/`) as the primary routing mechanism; the `pages/` directory exists only for blog post routes (`pages/posts/`).
+Next.js 16 blog/portfolio site for "Danger Close! Painting". Pure **App Router** — all routes are under `src/app/`.
 
-**Routing split:**
-- `src/app/` — App Router: root layout, sitemap, robots.txt
-- `pages/posts/` — Pages Router: blog post rendering via `next-mdx-remote` + `gray-matter`
+**Content system**: Blog posts live as MDX files in `content/`. Parsed at build time using `gray-matter` (frontmatter) and `next-mdx-remote`. Add utility functions in `src/lib/` for reading and parsing (e.g. `blog.ts`, `mdx.ts`).
 
-**Content:** Blog posts live in `content/` as MDX files with front-matter. `gray-matter` parses metadata; `next-mdx-remote` renders MDX.
+**Routing**: All routes under `src/app/` using the App Router. Blog posts will be at `/posts/[slug]`.
 
-**Styling:** Tailwind CSS v4 (configured via PostCSS). Dark mode via `next-themes`. Path alias `@/*` maps to `./src/*`.
+**Styling**: Tailwind CSS v4 via PostCSS — no `tailwind.config.*` file, uses v4 defaults. Global styles in `src/app/globals.css`.
+
+**Styling convention**: All component styles are defined as named classes in the `@layer components` block in `globals.css`. Do not use inline Tailwind utility classes directly in JSX for anything beyond trivial one-offs — extract them into a named class in `globals.css` instead. Use `color:var(--token)` syntax when referencing CSS custom properties (e.g. `text-[color:var(--foreground-btn)]`).
+
+Tailwind variant classes (`group`, `group-hover`, `peer`, etc.) cannot be used inside `@apply` in Tailwind v4 — they will cause a build error. Use native CSS selectors instead (e.g. `.image-card:hover .image-card-img { @apply opacity-60; }`).
+
+**Theming**: Dark/light mode via `next-themes`, wrapped in `src/components/providers/theme-provider.tsx` at the root layout.
+
+**Site config**: `src/constants/config.ts` holds `SITE_CONFIG` (baseUrl, title, description, author). `src/constants/navigation.ts` holds `navItems` and `footerNavItems`. Add any new site-wide URLs or identifiers to these files rather than inlining them.
 
 **Key components** (`src/components/`):
-- `layout.tsx` — page wrapper used across routes
-- `showcase.tsx` — Swiper image carousel on the homepage
-- `latest.tsx` — blog post grid
+- `Navbar.tsx` — top nav with theme toggle and mobile menu, driven by `navItems`
+- `Footer.tsx` — footer with nav links and copyright, driven by `footerNavItems`
+- `showcase.tsx` — Swiper carousel on the homepage (client component)
+- `latest.tsx` — blog post grid on the homepage
 - `providers/theme-provider.tsx` — wraps app with next-themes
 
-**SEO:** Metadata uses Next.js Metadata API with title template `"bastow.de - %s"`. Sitemap and robots.txt are generated via `src/app/sitemap.tsx` and `src/app/robots.tsx`.
+**SEO**: Metadata uses Next.js Metadata API via `SITE_CONFIG`. Sitemap and robots.txt generated via `src/app/sitemap.tsx` and `src/app/robots.tsx`.
+
+**Path alias**: `@/*` maps to `src/*`.
