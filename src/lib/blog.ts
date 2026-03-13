@@ -12,7 +12,7 @@ export interface BlogPostFrontmatter {
 
 export type BlogPost = MdxContent<BlogPostFrontmatter>;
 
-const BLOG_DIRECTORY = path.join(process.cwd(), "content/posts");
+const BLOG_DIRECTORY = path.join(process.cwd(), "content/texts");
 
 export function getBlogPostSlugs(): string[] {
   return getMdxSlugs(BLOG_DIRECTORY);

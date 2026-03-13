@@ -12,4 +12,7 @@ export const navItems: NavItem[] = [
   { name: "Contact", href: "/contact" },
 ];
 
-export const footerNavItems = navItems;
+export const footerNavItems: NavItem[] = [
+  ...navItems,
+  { name: "Imprint", href: "/imprint" },
+];
