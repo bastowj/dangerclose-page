@@ -11,10 +11,8 @@ import { SITE_CONFIG } from "@/constants/config";
 export function Navbar() {
   const pathname = usePathname();
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => setMounted(true), []);
+  const mounted = resolvedTheme !== undefined;
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
