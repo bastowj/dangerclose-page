@@ -10,8 +10,8 @@ export async function GET() {
       (post) => `
     <item>
       <title><![CDATA[${post.frontmatter.title}]]></title>
-      <link>${baseUrl}/posts/${post.slug}</link>
-      <guid>${baseUrl}/posts/${post.slug}</guid>
+      <link>${baseUrl}/texts/${post.slug}</link>
+      <guid>${baseUrl}/texts/${post.slug}</guid>
       <pubDate>${new Date(post.frontmatter.date).toUTCString()}</pubDate>
       <description><![CDATA[${post.frontmatter.excerpt}]]></description>
       ${post.frontmatter.author ? `<author>${post.frontmatter.author}</author>` : ""}

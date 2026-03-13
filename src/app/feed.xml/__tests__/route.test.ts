@@ -45,7 +45,7 @@ describe("GET /feed.xml", () => {
     jest.spyOn(blog, "getAllBlogPosts").mockReturnValue([makePost()]);
     const xml = await (await GET()).text();
     expect(xml).toContain("<![CDATA[Test Post]]>");
-    expect(xml).toContain("/posts/test-post");
+    expect(xml).toContain("/texts/test-post");
     expect(xml).toContain("<![CDATA[A test excerpt.]]>");
     expect(xml).toContain(new Date("2024-06-01").toUTCString());
   });
