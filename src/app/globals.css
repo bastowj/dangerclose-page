@@ -1,3 +1,170 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+:root {
+  --background: oklch(0.96 0 0);
+  --foreground: oklch(0.2 0 0);
+  --foreground-muted: oklch(0.4 0 0);
+  --foreground-btn: oklch(0.2 0 0);
+  --hover-bg: oklch(0.95 0 0);
+  --border-color: oklch(0.145 0 0 / 0.08);
+  --link-color: oklch(0.5084 0.102 234.51);
+  --link-hover: oklch(0.5784 0.112 234.51);
+}
+
+.dark {
+  --background: oklch(0.1 0 0);
+  --foreground: oklch(0.95 0 0);
+  --foreground-muted: oklch(0.7 0 0);
+  --foreground-btn: oklch(0.2 0 0);
+  --hover-bg: oklch(0.2 0 0);
+  --border-color: oklch(0.985 0 0 / 0.145);
+  --link-color: oklch(0.5084 0.102 234.51);
+  --link-hover: oklch(0.5784 0.112 234.51);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-btn: var(--foreground-btn);
+  --color-link: var(--link-color);
+  --color-link-hover: var(--link-hover);
+  --font-sans: var(--font-roboto-sans);
+  --font-mono: var(--font-roboto-mono);
+}
+
+/* Layer hierarchy */
+
+@layer base, components;
+
+/* Base styles using @layer */
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Global focus styles — keyboard only, not on mouse click */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-[color:var(--link-color)] rounded-sm;
+  }
+}
+
+/* Component and utility styles */
+@layer components {
+  /* Skip to content */
+  .skip-to-content {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50;
+    @apply bg-background text-foreground px-4 py-2 rounded border border-current font-medium;
+  }
+
+  /* Generic */
+  .main-content-wrapper {
+    @apply max-w-6xl mx-auto px-4 py-8;
+  }
+  .link {
+    @apply text-[color:var(--link-color)] hover:text-[color:var(--link-hover)];
+  }
+  .text-muted {
+    @apply text-[color:var(--foreground-muted)];
+  }
+  .nav-link {
+    @apply hover:opacity-70 transition-colors;
+  }
+  .nav-button {
+    @apply p-2 rounded-full transition-colors border border-solid border-transparent;
+    @apply hover:bg-[color:var(--hover-bg)];
+    @apply hover:border-[color:var(--border-color)];
+  }
+  .border-subtle {
+    @apply border-[color:var(--border-color)];
+  }
+  .nav-theme-icon {
+    @apply w-6 h-6;
+  }
+
+  /* MDXContent Styles */
+  .mdx-h1 {
+    @apply text-3xl font-bold mt-4 mb-4;
+  }
+  .mdx-h2 {
+    @apply text-2xl font-bold mt-3 mb-3;
+  }
+  .mdx-h3 {
+    @apply text-xl font-bold mt-2 mb-2;
+  }
+  .mdx-p {
+    @apply my-4;
+  }
+  .mdx-ul {
+    @apply list-disc pl-6 my-4;
+  }
+  .mdx-ol {
+    @apply list-decimal pl-6 my-4;
+  }
+  .mdx-li {
+    @apply mb-1;
+  }
+  .mdx-a {
+    @apply text-[color:var(--link-color)] hover:text-[color:var(--link-hover)];
+  }
+  .mdx-img {
+    @apply rounded-lg mx-auto;
+  }
+  .mdx-img-alt {
+    @apply text-center text-sm mt-2 text-gray-600 dark:text-gray-400;
+  }
+  .mdx-blockquote {
+    @apply border-l-4 border-gray-300 dark:border-gray-700 pl-4 my-4 italic;
+  }
+  .mdx-code {
+    @apply bg-gray-200 dark:bg-gray-800 rounded px-1 py-0.5 font-mono text-sm;
+  }
+  .mdx-pre {
+    @apply bg-gray-200 dark:bg-gray-800 rounded p-4 overflow-x-auto my-4 font-mono text-sm;
+  }
+
+  /* Blog Styles */
+  .blog-h1 {
+    @apply text-3xl font-bold mt-4 mb-4;
+  }
+  .blog-h2 {
+    @apply text-2xl font-bold mt-3 mb-3;
+  }
+  .blog-h3 {
+    @apply text-xl font-bold mt-2 mb-2;
+  }
+  .blog-category-link {
+    @apply text-xs text-[color:var(--foreground-btn)] px-2 py-1 rounded-full border border-current hover:opacity-70 transition-opacity;
+  }
+  .blog-date {
+    @apply text-sm text-gray-600 dark:text-gray-400;
+  }
+  .blog-cover-image {
+    @apply rounded-lg w-full object-cover;
+  }
+  .blog-excerpt {
+    @apply text-[color:var(--foreground-muted)];
+  }
+
+  /* CategoryList Styles */
+  .category-all-link {
+    @apply px-2 py-1 rounded-full text-xs transition-colors;
+  }
+  .category-all-link.active {
+    @apply bg-blue-600 text-white;
+  }
+  .category-all-link.inactive {
+    @apply bg-gray-300 hover:bg-gray-400;
+  }
+  .category-link {
+    @apply px-2 py-1 rounded-full text-xs text-[color:var(--foreground-btn)] transition-colors;
+  }
+  .category-link.active {
+    @apply bg-blue-600 text-white;
+  }
+  .category-link.inactive {
+    @apply bg-gray-300 hover:bg-gray-400;
+  }
+}
