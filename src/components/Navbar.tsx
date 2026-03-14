@@ -23,7 +23,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="border-b border-subtle">
+    <nav className="relative border-b border-subtle">
       <div className="main-content-wrapper flex items-center justify-between py-3">
         <Link href="/" className="text-xl font-bold">
           {SITE_CONFIG.defaultTitle}
@@ -87,18 +87,20 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="border-t border-subtle px-4 pb-4 md:hidden">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`nav-link block py-2 ${pathname === item.href ? "font-semibold" : ""}`}
-              onClick={() => setMenuOpen(false)}
-              target={item.target}
-            >
-              {item.name}
-            </Link>
-          ))}
+        <div className="absolute top-16 right-0 left-0 bg-background border-b border-subtle z-50 md:hidden">
+          <div className="flex flex-col p-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`nav-link py-2 ${pathname === item.href ? "font-semibold" : ""}`}
+                onClick={() => setMenuOpen(false)}
+                target={item.target}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </nav>
