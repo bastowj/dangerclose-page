@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
@@ -24,7 +25,14 @@ export function Navbar() {
 
   return (
     <nav className="relative w-full flex items-center justify-between border-b border-subtle px-8 sm:px-20 py-4">
-        <Link href="/" className="text-xl font-bold">
+        <Link href="/" className="flex items-center gap-2 text-xl font-bold">
+          <Image
+            src="/avatar.png"
+            alt={SITE_CONFIG.defaultTitle}
+            width={32}
+            height={32}
+            className="rounded-full"
+          />
           {SITE_CONFIG.defaultTitle}
         </Link>
 
