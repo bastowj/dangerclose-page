@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { SunIcon, MoonIcon, HamburgerMenuIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { SunIcon, MoonIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { navItems } from "@/constants/navigation";
 import { SITE_CONFIG } from "@/constants/config";
 
@@ -77,9 +77,9 @@ export function Navbar() {
             aria-label="Toggle menu"
           >
             {menuOpen ? (
-              <Cross2Icon className="nav-theme-icon" />
+              <XMarkIcon className="nav-theme-icon" />
             ) : (
-              <HamburgerMenuIcon className="nav-theme-icon" />
+              <Bars3Icon className="nav-theme-icon" />
             )}
           </button>
         </div>
