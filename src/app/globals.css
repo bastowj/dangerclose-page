@@ -60,6 +60,18 @@
   }
 
   /* Generic */
+  .btn-primary {
+    @apply px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors;
+  }
+
+  /* Not Found */
+  .not-found-title {
+    @apply text-4xl font-bold mb-4;
+  }
+  .not-found-message {
+    @apply text-xl mb-8;
+  }
+
   .main-content-wrapper {
     @apply max-w-6xl mx-auto px-4 py-8;
   }
@@ -74,8 +86,11 @@
   }
   .nav-button {
     @apply p-2 rounded-full transition-colors border border-solid border-transparent;
-    @apply hover:bg-[color:var(--hover-bg)];
-    @apply hover:border-[color:var(--border-color)];
+  }
+  @media (hover: hover) {
+    .nav-button:hover {
+      @apply bg-[color:var(--hover-bg)] border-[color:var(--border-color)];
+    }
   }
   .border-subtle {
     @apply border-[color:var(--border-color)];

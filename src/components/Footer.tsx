@@ -25,6 +25,7 @@ export function Footer() {
                 {item.name}
               </Link>
             ))}
+            <a href="/feed.xml" className="nav-link text-sm">RSS</a>
           </div>
         </div>
       </div>
