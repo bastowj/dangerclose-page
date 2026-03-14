@@ -18,7 +18,7 @@ Next.js 16 blog/portfolio site for "Danger Close! Painting". Pure **App Router**
 
 **Content system**: Blog posts live as MDX files in `content/`. Parsed at build time using `gray-matter` (frontmatter) and `next-mdx-remote`. Add utility functions in `src/lib/` for reading and parsing (e.g. `blog.ts`, `mdx.ts`).
 
-**Routing**: All routes under `src/app/` using the App Router. Blog posts will be at `/posts/[slug]`.
+**Routing**: All routes under `src/app/` using the App Router. Blog posts are at `/texts/[slug]`.
 
 **Styling**: Tailwind CSS v4 via PostCSS — no `tailwind.config.*` file, uses v4 defaults. Global styles in `src/app/globals.css`.
 
@@ -30,6 +30,8 @@ Tailwind variant classes (`group`, `group-hover`, `peer`, etc.) cannot be used i
 
 **Site config**: `src/constants/config.ts` holds `SITE_CONFIG` (baseUrl, title, description, author). `src/constants/navigation.ts` holds `navItems` and `footerNavItems`. Add any new site-wide URLs or identifiers to these files rather than inlining them.
 
+**Icons**: `@heroicons/react/24/outline` — used for theme toggle (`SunIcon`, `MoonIcon`) and mobile menu (`Bars3Icon`, `XMarkIcon`).
+
 **Key components** (`src/components/`):
 - `Navbar.tsx` — top nav with theme toggle and mobile menu, driven by `navItems`
 - `Footer.tsx` — footer with nav links and copyright, driven by `footerNavItems`
@@ -40,3 +42,7 @@ Tailwind variant classes (`group`, `group-hover`, `peer`, etc.) cannot be used i
 **SEO**: Metadata uses Next.js Metadata API via `SITE_CONFIG`. Sitemap and robots.txt generated via `src/app/sitemap.tsx` and `src/app/robots.tsx`.
 
 **Path alias**: `@/*` maps to `src/*`.
+
+## Git hooks
+
+A local pre-commit hook at `.git/hooks/pre-commit` runs `npm run lint && npm test` before every commit. It is not tracked by git.
