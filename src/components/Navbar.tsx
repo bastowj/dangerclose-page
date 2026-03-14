@@ -23,8 +23,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="relative border-b border-subtle">
-      <div className="main-content-wrapper flex items-center justify-between py-3">
+    <nav className="relative w-full flex items-center justify-between border-b border-subtle px-8 sm:px-20 py-4">
         <Link href="/" className="text-xl font-bold">
           {SITE_CONFIG.defaultTitle}
         </Link>
@@ -83,7 +82,6 @@ export function Navbar() {
             )}
           </button>
         </div>
-      </div>
 
       {/* Mobile menu */}
       {menuOpen && (
