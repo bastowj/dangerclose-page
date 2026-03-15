@@ -2,33 +2,42 @@
 
 :root {
   --background: oklch(0.96 0 0);
+  --surface: oklch(0.91 0 0);
   --foreground: oklch(0.2 0 0);
   --foreground-muted: oklch(0.4 0 0);
-  --foreground-btn: oklch(0.2 0 0);
+  --primary-foreground: oklch(0.2 0 0);
   --hover-bg: oklch(0.95 0 0);
-  --border-color: oklch(0.145 0 0 / 0.08);
-  --link-color: oklch(0.5084 0.102 234.51);
-  --link-hover: oklch(0.5784 0.112 234.51);
+  --border: oklch(0.145 0 0 / 0.08);
+  --primary: oklch(0.5084 0.102 234.51);
+  --primary-hover: oklch(0.5784 0.112 234.51);
+  --primary-subtle: oklch(0.75 0.07 234.51);
+  --primary-strong: oklch(0.38 0.13 234.51);
 }
 
 .dark {
   --background: oklch(0.1 0 0);
+  --surface: oklch(0.15 0 0);
   --foreground: oklch(0.95 0 0);
   --foreground-muted: oklch(0.7 0 0);
-  --foreground-btn: oklch(0.2 0 0);
+  --primary-foreground: oklch(0.2 0 0);
   --hover-bg: oklch(0.2 0 0);
-  --border-color: oklch(0.985 0 0 / 0.145);
-  --link-color: oklch(0.5084 0.102 234.51);
-  --link-hover: oklch(0.5784 0.112 234.51);
+  --border: oklch(0.985 0 0 / 0.145);
+  --primary: oklch(0.5084 0.102 234.51);
+  --primary-hover: oklch(0.5784 0.112 234.51);
+  --primary-subtle: oklch(0.50 0.08 234.51);
+  --primary-strong: oklch(0.82 0.12 234.51);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
-  --color-foreground-btn: var(--foreground-btn);
-  --color-link: var(--link-color);
-  --color-link-hover: var(--link-hover);
+  --color-foreground-btn: var(--primary-foreground);
+  --color-link: var(--primary);
+  --color-link-hover: var(--primary-hover);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-primary-strong: var(--primary-strong);
   --font-sans: var(--font-roboto-sans);
   --font-mono: var(--font-roboto-mono);
 }
@@ -37,17 +46,18 @@
 
 @layer base, components;
 
-/* Base styles using @layer */
+/* Base styles */
 @layer base {
   body {
     @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: color 150ms, background-color 150ms;
   }
 
   /* Global focus styles — keyboard only, not on mouse click */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-[color:var(--link-color)] rounded-sm;
+    @apply outline-2 outline-offset-2 outline-[color:var(--primary)] rounded-sm;
   }
 }
 
@@ -59,9 +69,86 @@
     @apply bg-background text-foreground px-4 py-2 rounded border border-current font-medium;
   }
 
-  /* Generic */
+  /* Buttons */
   .btn-primary {
     @apply px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors;
+  }
+
+  /* Generic */
+  .main-content-wrapper {
+    @apply max-w-6xl mx-auto px-4 py-8;
+  }
+  .link {
+    @apply text-[color:var(--primary)] hover:text-[color:var(--primary-hover)];
+  }
+  .text-muted {
+    @apply text-[color:var(--foreground-muted)];
+  }
+  .border-subtle {
+    @apply border-[color:var(--border)];
+  }
+
+  /* Navbar */
+  .nav {
+    @apply relative w-full flex items-center justify-between border-b border-[color:var(--border)] px-8 sm:px-20 py-4;
+  }
+  .nav-brand-link {
+    @apply flex items-center gap-2 text-xl font-bold;
+  }
+  .nav-brand-avatar {
+    @apply rounded-full;
+  }
+  .nav-desktop {
+    @apply hidden items-center gap-6 md:flex;
+  }
+  .nav-mobile-buttons {
+    @apply flex items-center gap-2 md:hidden;
+  }
+  .nav-mobile-menu {
+    @apply absolute top-16 right-0 left-0 bg-background border-b border-[color:var(--border)] z-50 md:hidden;
+  }
+  .nav-mobile-menu-inner {
+    @apply flex flex-col p-4;
+  }
+  .nav-link {
+    @apply hover:opacity-70 transition-colors;
+  }
+  .nav-button {
+    @apply p-2 rounded-full transition-colors border border-solid border-transparent;
+  }
+  @media (hover: hover) {
+    .nav-button:hover {
+      @apply bg-[color:var(--hover-bg)] border-[color:var(--border)];
+    }
+    .nav-button:hover .nav-theme-icon {
+      @apply text-[color:var(--primary)];
+    }
+  }
+  .nav-theme-icon {
+    @apply w-6 h-6 transition-colors;
+  }
+
+  /* Footer */
+  .footer {
+    @apply w-full py-8 px-8 sm:px-20 mt-auto border-t border-[color:var(--border)];
+  }
+  .footer-inner {
+    @apply flex flex-col items-center gap-6 sm:flex-row sm:justify-between;
+  }
+  .footer-brand {
+    @apply flex flex-col gap-1;
+  }
+  .footer-brand-title {
+    @apply font-semibold;
+  }
+  .footer-copyright {
+    @apply text-sm text-[color:var(--foreground-muted)];
+  }
+  .footer-nav {
+    @apply flex flex-wrap gap-6;
+  }
+  .footer-nav-link {
+    @apply text-sm hover:opacity-70 transition-colors;
   }
 
   /* Not Found */
@@ -72,72 +159,45 @@
     @apply text-xl mb-8;
   }
 
-  .main-content-wrapper {
-    @apply max-w-6xl mx-auto px-4 py-8;
-  }
-  .link {
-    @apply text-[color:var(--link-color)] hover:text-[color:var(--link-hover)];
-  }
-  .text-muted {
-    @apply text-[color:var(--foreground-muted)];
-  }
-  .nav-link {
-    @apply hover:opacity-70 transition-colors;
-  }
-  .nav-button {
-    @apply p-2 rounded-full transition-colors border border-solid border-transparent;
-  }
-  @media (hover: hover) {
-    .nav-button:hover {
-      @apply bg-[color:var(--hover-bg)] border-[color:var(--border-color)];
-    }
-  }
-  .border-subtle {
-    @apply border-[color:var(--border-color)];
-  }
-  .nav-theme-icon {
-    @apply w-6 h-6;
-  }
-
   /* MDXContent Styles */
   .mdx-h1 {
     @apply text-3xl font-bold mt-4 mb-4;
   }
   .mdx-h2 {
-    @apply text-2xl font-bold mt-3 mb-3;
+    @apply text-2xl font-bold mt-10 mb-3;
   }
   .mdx-h3 {
-    @apply text-xl font-bold mt-2 mb-2;
+    @apply text-xl font-bold mt-6 mb-2;
   }
   .mdx-p {
-    @apply my-4;
+    @apply my-4 leading-relaxed;
   }
   .mdx-ul {
-    @apply list-disc pl-6 my-4;
+    @apply list-disc pl-6 my-4 leading-relaxed;
   }
   .mdx-ol {
-    @apply list-decimal pl-6 my-4;
+    @apply list-decimal pl-6 my-4 leading-relaxed;
   }
   .mdx-li {
-    @apply mb-1;
+    @apply mb-2;
   }
   .mdx-a {
-    @apply text-[color:var(--link-color)] hover:text-[color:var(--link-hover)];
+    @apply text-[color:var(--primary)] hover:text-[color:var(--primary-hover)];
   }
   .mdx-img {
     @apply rounded-lg mx-auto;
   }
   .mdx-img-alt {
-    @apply text-center text-sm mt-2 text-gray-600 dark:text-gray-400;
+    @apply text-center text-sm mt-2 text-[color:var(--foreground-muted)];
   }
   .mdx-blockquote {
-    @apply border-l-4 border-gray-300 dark:border-gray-700 pl-4 my-4 italic;
+    @apply bg-[color:var(--surface)] border border-[color:var(--border)] border-l-4 border-l-[color:var(--primary)] rounded p-5 my-6 italic text-[color:var(--foreground-muted)];
   }
   .mdx-code {
-    @apply bg-gray-200 dark:bg-gray-800 rounded px-1 py-0.5 font-mono text-sm;
+    @apply bg-[color:var(--surface)] border border-[color:var(--border)] rounded-sm px-1.5 py-0.5 font-mono text-sm;
   }
   .mdx-pre {
-    @apply bg-gray-200 dark:bg-gray-800 rounded p-4 overflow-x-auto my-4 font-mono text-sm;
+    @apply bg-[color:var(--surface)] border border-[color:var(--border)] border-l-4 border-l-[color:var(--primary)] rounded p-5 overflow-x-auto my-6 font-mono text-sm leading-relaxed;
   }
 
   /* Blog Styles */
@@ -151,10 +211,10 @@
     @apply text-xl font-bold mt-2 mb-2;
   }
   .blog-category-link {
-    @apply text-xs text-[color:var(--foreground-btn)] px-2 py-1 rounded-full border border-current hover:opacity-70 transition-opacity;
+    @apply text-xs font-semibold px-2 py-1 rounded-full border-2 border-[color:var(--primary)] text-[color:var(--primary)] hover:bg-[color:var(--primary)] hover:text-white transition-colors;
   }
   .blog-date {
-    @apply text-sm text-gray-600 dark:text-gray-400;
+    @apply text-sm text-[color:var(--foreground-muted)];
   }
   .blog-cover-image {
     @apply rounded-lg w-full object-cover;
@@ -174,7 +234,7 @@
     @apply bg-gray-300 hover:bg-gray-400;
   }
   .category-link {
-    @apply px-2 py-1 rounded-full text-xs text-[color:var(--foreground-btn)] transition-colors;
+    @apply px-2 py-1 rounded-full text-xs text-[color:var(--primary-foreground)] transition-colors;
   }
   .category-link.active {
     @apply bg-blue-600 text-white;
