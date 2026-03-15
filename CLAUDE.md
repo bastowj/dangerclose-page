@@ -26,6 +26,8 @@ Next.js 16 blog/portfolio site for "Danger Close! Painting". Pure **App Router**
 
 Tailwind variant classes (`group`, `group-hover`, `peer`, etc.) cannot be used inside `@apply` in Tailwind v4 — they will cause a build error. Use native CSS selectors instead (e.g. `.image-card:hover .image-card-img { @apply opacity-60; }`).
 
+**Do not use canonical Tailwind token shorthand classes** (e.g. `text-link`, `bg-surface`, `text-foreground-muted`) even though the IDE may suggest them. The project uses `@theme inline` which resolves token values statically at build time — using canonical names bakes in the light-mode value and breaks dark mode. Always reference CSS custom properties directly via `var(--token)` (e.g. `text-[color:var(--primary)]`) so the browser resolves them at runtime and the `.dark` class override takes effect.
+
 **Theming**: Dark/light mode via `next-themes`, wrapped in `src/components/providers/theme-provider.tsx` at the root layout.
 
 **Site config**: `src/constants/config.ts` holds `SITE_CONFIG` (baseUrl, title, description, author). `src/constants/navigation.ts` holds `navItems` and `footerNavItems`. Add any new site-wide URLs or identifiers to these files rather than inlining them.
