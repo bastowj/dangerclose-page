@@ -5,18 +5,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev      # Start dev server with Turbopack (localhost:3000)
-npm run build    # Production build
-npm run lint     # ESLint
-npm run format   # Auto-format with Prettier
-npm test         # Run Jest tests
+pnpm dev         # Start dev server with Turbopack (localhost:3000)
+pnpm build       # Production build
+pnpm lint        # ESLint
+pnpm format      # Auto-format with Prettier
+pnpm test        # Run Jest tests
 ```
 
 ## Architecture
 
 Next.js 16 blog/portfolio site for "Danger Close! Painting". Pure **App Router** — all routes are under `src/app/`.
 
-**Content system**: Blog posts live as MDX files in `content/`. Parsed at build time using `gray-matter` (frontmatter) and `next-mdx-remote`. Add utility functions in `src/lib/` for reading and parsing (e.g. `blog.ts`, `mdx.ts`).
+**Content system**: Blog posts (`content/texts/`) and static pages (`content/pages/`) live as MDX files. Compiled at build time by `content-collections` with Zod-validated frontmatter; collections are defined in `content-collections.ts` at the repo root. Consume the generated `allTexts` / `allPages` arrays via `src/lib/blog.ts` and `src/lib/pages.ts`.
 
 **Routing**: All routes under `src/app/` using the App Router. Blog posts are at `/texts/[slug]`.
 
@@ -44,7 +44,3 @@ Tailwind variant classes (`group`, `group-hover`, `peer`, etc.) cannot be used i
 **SEO**: Metadata uses Next.js Metadata API via `SITE_CONFIG`. Sitemap and robots.txt generated via `src/app/sitemap.tsx` and `src/app/robots.tsx`.
 
 **Path alias**: `@/*` maps to `src/*`.
-
-## Git hooks
-
-A local pre-commit hook at `.git/hooks/pre-commit` runs `npm run lint && npm test` before every commit. It is not tracked by git.

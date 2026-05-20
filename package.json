@@ -13,6 +13,14 @@
   "engines": {
     "node": ">=24.0.0"
   },
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
+  },
   "dependencies": {
     "@content-collections/core": "^0.15.0",
     "@content-collections/mdx": "^0.2.2",
@@ -26,22 +34,23 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.4",
+    "@eslint/eslintrc": "^3.3.5",
+    "@tailwindcss/postcss": "^4.3.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.6.1",
-    "@types/react": "^19.2.14",
+    "@types/node": "^25.9.1",
+    "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.6",
     "eslint-config-prettier": "^10.1.8",
-    "jest": "^30.4.0",
-    "jest-environment-jsdom": "^30.4.0",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "prettier": "^3.8.3",
-    "tailwindcss": "^4.2.4",
-    "ts-jest": "^29.4.9",
+    "tailwindcss": "^4.3.0",
+    "ts-jest": "^29.4.10",
     "typescript": "^5.9.3"
   }
 }
