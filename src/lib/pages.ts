@@ -1,33 +1,38 @@
-import path from "path";
-import {
-  getMdxSlugs,
-  getMdxContentBySlug,
-  getAllMdxContent,
-  MdxContent,
-} from "@/lib/mdx";
+import { allPages } from "content-collections";
 
 export interface StaticPageFrontmatter {
   title: string;
-  description: string;
+  description?: string;
 }
 
-export type StaticPage = MdxContent<StaticPageFrontmatter>;
+export interface StaticPage {
+  slug: string;
+  frontmatter: StaticPageFrontmatter;
+  body: string;
+}
 
-const PAGES_DIRECTORY = path.join(process.cwd(), "content/pages");
+type PageDoc = (typeof allPages)[number];
+
+function toStaticPage(doc: PageDoc): StaticPage {
+  return {
+    slug: doc.slug,
+    frontmatter: {
+      title: doc.title,
+      description: doc.description ?? undefined,
+    },
+    body: doc.body,
+  };
+}
 
 export function getStaticPageSlugs(): string[] {
-  return getMdxSlugs(PAGES_DIRECTORY);
+  return allPages.map((doc) => doc.slug);
 }
 
 export function getStaticPageBySlug(slug: string): StaticPage | null {
-  const mdxContent = getMdxContentBySlug<StaticPageFrontmatter>(
-    PAGES_DIRECTORY,
-    slug,
-  );
-  if (!mdxContent) return null;
-  return mdxContent as StaticPage;
+  const doc = allPages.find((d) => d.slug === slug);
+  return doc ? toStaticPage(doc) : null;
 }
 
 export function getAllStaticPages(): StaticPage[] {
-  return getAllMdxContent<StaticPageFrontmatter>(PAGES_DIRECTORY) as StaticPage[];
+  return allPages.map(toStaticPage);
 }

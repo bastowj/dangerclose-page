@@ -14,14 +14,16 @@
     "node": ">=24.0.0"
   },
   "dependencies": {
+    "@content-collections/core": "^0.15.0",
+    "@content-collections/mdx": "^0.2.2",
+    "@content-collections/next": "^0.2.11",
     "@heroicons/react": "^2.2.0",
-    "gray-matter": "^4.0.3",
     "next": "^16.2.6",
-    "next-mdx-remote": "^6.0.0",
     "next-themes": "^0.4.6",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "swiper": "^12.1.4"
+    "swiper": "^12.1.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.4",

@@ -1,3 +1,12 @@
+jest.mock(
+  "content-collections",
+  () => ({
+    allTexts: [],
+    allPages: [],
+  }),
+  { virtual: true },
+);
+
 import { GET } from "../route";
 import * as blog from "@/lib/blog";
 import type { BlogPost } from "@/lib/blog";
@@ -7,7 +16,7 @@ jest.mock("@/lib/blog");
 function makePost(overrides: Partial<BlogPost["frontmatter"]> = {}): BlogPost {
   return {
     slug: "test-post",
-    content: "",
+    body: "",
     frontmatter: {
       title: "Test Post",
       date: "2024-06-01",
