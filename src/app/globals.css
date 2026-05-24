@@ -248,6 +248,9 @@
   .showcase-card-title {
     @apply text-3xl md:text-4xl;
   }
+  .showcase-project-title {
+    @apply mt-1 text-base text-[color:var(--foreground-muted)];
+  }
   .showcase-caption {
     @apply leading-relaxed;
   }
@@ -282,6 +285,32 @@
   }
   .project-gallery-caption {
     @apply text-sm text-[color:var(--foreground-muted)];
+  }
+
+  /* Image page */
+  .image-page {
+    @apply flex flex-col gap-6;
+  }
+  .image-page-figure {
+    @apply flex justify-center;
+  }
+  .image-page-img {
+    @apply rounded-lg max-w-full h-auto;
+  }
+  .image-page-info {
+    @apply flex flex-col gap-3;
+  }
+  .image-page-caption {
+    @apply text-3xl font-bold;
+  }
+  .image-page-meta {
+    @apply flex flex-wrap items-center gap-2 text-sm text-[color:var(--foreground-muted)];
+  }
+  .image-page-categories {
+    @apply flex flex-wrap gap-2;
+  }
+  .image-page-category {
+    @apply px-2 py-1 rounded-full text-xs bg-[color:var(--surface)] text-[color:var(--foreground-muted)];
   }
 
   /* CategoryList Styles */

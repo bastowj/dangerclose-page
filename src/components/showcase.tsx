@@ -11,11 +11,12 @@ export interface ShowcaseSlide {
   slug: string;
   src: string;
   alt: string;
-  caption?: string;
+  caption: string;
   date: string;
   categories: string[];
-  title: string;
-  href: string | null;
+  projectTitle: string | null;
+  projectHref: string | null;
+  href: string;
 }
 
 export default function Showcase({ slides }: { slides: ShowcaseSlide[] }) {
@@ -49,11 +50,13 @@ function Slide({ slide }: { slide: ShowcaseSlide }) {
       className="showcase-image"
     />
   );
-  const title = <span className="showcase-card-title">{slide.title}</span>;
+  const caption = (
+    <span className="showcase-card-title">{slide.caption}</span>
+  );
   return (
     <div className="showcase-slide">
       <div className="showcase-image-wrap">
-        {slide.href ? <Link href={slide.href}>{img}</Link> : img}
+        <Link href={slide.href}>{img}</Link>
       </div>
       <div className="showcase-info">
         <div className="showcase-meta">
@@ -63,9 +66,17 @@ function Slide({ slide }: { slide: ShowcaseSlide }) {
           <span>{slide.date}</span>
         </div>
         <div className="showcase-card-title-wrap">
-          {slide.href ? <Link href={slide.href}>{title}</Link> : title}
+          <Link href={slide.href}>{caption}</Link>
         </div>
-        {slide.caption && <p className="showcase-caption">{slide.caption}</p>}
+        {slide.projectTitle && (
+          <div className="showcase-project-title">
+            {slide.projectHref ? (
+              <Link href={slide.projectHref}>{slide.projectTitle}</Link>
+            ) : (
+              slide.projectTitle
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

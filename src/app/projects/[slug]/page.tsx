@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
@@ -58,16 +59,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className="project-gallery-grid">
             {images.map((image) => (
               <figure key={image.slug} className="project-gallery-item">
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={400}
-                  height={400}
-                  className="project-gallery-img"
-                />
+                <Link href={`/images/${image.slug}`}>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={400}
+                    height={400}
+                    className="project-gallery-img"
+                  />
+                </Link>
                 {image.caption && (
                   <figcaption className="project-gallery-caption">
-                    {image.caption}
+                    <Link href={`/images/${image.slug}`}>{image.caption}</Link>
                   </figcaption>
                 )}
               </figure>

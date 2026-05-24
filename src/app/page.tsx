@@ -10,11 +10,12 @@ export default function Home() {
       slug: image.slug,
       src: image.src,
       alt: image.alt,
-      caption: image.caption,
+      caption: image.caption ?? image.alt,
       date: image.date,
       categories: image.categories,
-      title: project?.frontmatter.title ?? image.alt,
-      href: project ? `/projects/${project.slug}` : null,
+      projectTitle: project?.frontmatter.title ?? null,
+      projectHref: project ? `/projects/${project.slug}` : null,
+      href: `/images/${image.slug}`,
     };
   });
 
