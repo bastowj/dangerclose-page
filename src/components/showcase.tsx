@@ -7,58 +7,65 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
-export default function showcase() {
+export interface ShowcaseSlide {
+  slug: string;
+  src: string;
+  alt: string;
+  caption?: string;
+  date: string;
+  categories: string[];
+  title: string;
+  href: string | null;
+}
+
+export default function Showcase({ slides }: { slides: ShowcaseSlide[] }) {
+  if (slides.length === 0) return null;
   return (
-    <div className="container mx-auto max-w-6xl pt-8 pb-16 md:px-20 md:pt-16">
-      <h1 className="pb-12 text-center text-3xl font-bold">Showcase</h1>
+    <div className="showcase">
+      <h1 className="showcase-title">Showcase</h1>
       <Swiper
         slidesPerView={1}
-        loop={true}
+        loop={slides.length > 1}
         modules={[Autoplay]}
-        autoplay={{
-          delay: 4000,
-        }}
+        autoplay={{ delay: 4000 }}
       >
-        <SwiperSlide>{Slide()}</SwiperSlide>
-        <SwiperSlide>{Slide()}</SwiperSlide>
-        <SwiperSlide>{Slide()}</SwiperSlide>
-        <SwiperSlide>{Slide()}</SwiperSlide>
-        <SwiperSlide>{Slide()}</SwiperSlide>
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.slug}>
+            <Slide slide={slide} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
 }
 
-function Slide() {
+function Slide({ slide }: { slide: ShowcaseSlide }) {
+  const img = (
+    <Image
+      src={slide.src}
+      width={400}
+      height={400}
+      alt={slide.alt}
+      className="showcase-image"
+    />
+  );
+  const title = <span className="showcase-card-title">{slide.title}</span>;
   return (
-    <div className="mx-20 grid grid-cols-1 place-items-center gap-10 md:grid-cols-2">
-      <div className="image">
-        <Link href={"/"}>
-          <Image
-            src={"/images/showcase1.jpg"}
-            width={400}
-            height={400}
-            alt="image"
-            className="rounded-full "
-          />
-        </Link>
+    <div className="showcase-slide">
+      <div className="showcase-image-wrap">
+        {slide.href ? <Link href={slide.href}>{img}</Link> : img}
       </div>
-      <div className="info">
-        <div className="cat mb-2">
-          <Link href={"/"}>Categories - Date</Link>
+      <div className="showcase-info">
+        <div className="showcase-meta">
+          {slide.categories.length > 0 && (
+            <span>{slide.categories.join(", ")} · </span>
+          )}
+          <span>{slide.date}</span>
         </div>
-        <div className="title mb-5">
-          <Link href={"/"} className="text-3xl md:text-4xl">
-            Lorem ipsum
-          </Link>
+        <div className="showcase-card-title-wrap">
+          {slide.href ? <Link href={slide.href}>{title}</Link> : title}
         </div>
-        <div className="description">
-          <Link href={"/"} className="">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua.
-          </Link>
-        </div>
+        {slide.caption && <p className="showcase-caption">{slide.caption}</p>}
       </div>
     </div>
   );

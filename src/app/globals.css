@@ -223,6 +223,67 @@
     @apply text-[color:var(--foreground-muted)];
   }
 
+  /* Showcase (homepage) */
+  .showcase {
+    @apply container mx-auto max-w-6xl pt-8 pb-16 md:px-20 md:pt-16;
+  }
+  .showcase-title {
+    @apply pb-12 text-center text-3xl font-bold;
+  }
+  .showcase-slide {
+    @apply mx-20 grid grid-cols-1 place-items-center gap-10 md:grid-cols-2;
+  }
+  .showcase-image-wrap {
+    @apply flex justify-center;
+  }
+  .showcase-image {
+    @apply rounded-full;
+  }
+  .showcase-meta {
+    @apply mb-2 text-sm text-[color:var(--foreground-muted)];
+  }
+  .showcase-card-title-wrap {
+    @apply mb-5;
+  }
+  .showcase-card-title {
+    @apply text-3xl md:text-4xl;
+  }
+  .showcase-caption {
+    @apply leading-relaxed;
+  }
+
+  /* Project page */
+  .project-header {
+    @apply mb-8;
+  }
+  .project-title {
+    @apply text-4xl font-bold mb-3;
+  }
+  .project-meta {
+    @apply flex gap-2 text-sm text-[color:var(--foreground-muted)] mb-4;
+  }
+  .project-excerpt {
+    @apply text-lg leading-relaxed;
+  }
+  .project-gallery {
+    @apply mt-12;
+  }
+  .project-gallery-title {
+    @apply text-2xl font-bold mb-6;
+  }
+  .project-gallery-grid {
+    @apply grid gap-6 sm:grid-cols-2 md:grid-cols-3;
+  }
+  .project-gallery-item {
+    @apply flex flex-col gap-2;
+  }
+  .project-gallery-img {
+    @apply rounded-lg w-full h-auto object-cover;
+  }
+  .project-gallery-caption {
+    @apply text-sm text-[color:var(--foreground-muted)];
+  }
+
   /* CategoryList Styles */
   .category-all-link {
     @apply px-2 py-1 rounded-full text-xs transition-colors;

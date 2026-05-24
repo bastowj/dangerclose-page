@@ -1,0 +1,13 @@
+{
+  "src": "/images/showcase1.jpg",
+  "alt": "Example finished mini on a desert base",
+  "caption": "First test mini for the example project.",
+  "date": "2026-05-25",
+  "project": "example-project",
+  "categories": [
+    "saga",
+    "irish",
+    "workbench"
+  ],
+  "showcase": true
+}
