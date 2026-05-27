@@ -9,6 +9,7 @@ export interface ImageRecord {
   project?: string;
   categories: string[];
   showcase: boolean;
+  gallery: boolean;
 }
 
 type ImageDoc = (typeof allImages)[number];
@@ -23,6 +24,7 @@ function toImage(doc: ImageDoc): ImageRecord {
     project: doc.project ?? undefined,
     categories: doc.categories,
     showcase: doc.showcase,
+    gallery: doc.gallery,
   };
 }
 
@@ -41,6 +43,10 @@ export function getImageBySlug(slug: string): ImageRecord | null {
 
 export function getShowcaseImages(): ImageRecord[] {
   return getAllImages().filter((image) => image.showcase);
+}
+
+export function getGalleryImages(): ImageRecord[] {
+  return getAllImages().filter((image) => image.gallery);
 }
 
 export function getImagesByProject(projectSlug: string): ImageRecord[] {

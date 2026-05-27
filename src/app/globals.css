@@ -293,6 +293,26 @@
     @apply leading-relaxed;
   }
 
+  /* Images index */
+  .images-grid {
+    @apply grid gap-6 list-none p-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+  .images-grid-item {
+    @apply flex flex-col gap-2;
+  }
+  .images-grid-image-wrap {
+    @apply block overflow-hidden rounded-lg;
+  }
+  .images-grid-image {
+    @apply w-full h-auto object-cover transition-opacity;
+  }
+  .images-grid-image-wrap:hover .images-grid-image {
+    @apply opacity-80;
+  }
+  .images-grid-caption {
+    @apply text-sm text-[color:var(--foreground-muted)];
+  }
+
   /* Projects index */
   .projects-page-title {
     @apply text-4xl font-bold mb-8;

@@ -60,6 +60,7 @@ const images = defineCollection({
     project: z.string().nullish(),
     categories: z.array(z.string()).default([]),
     showcase: z.boolean().default(false),
+    gallery: z.boolean().default(true),
   }),
   transform: (doc) => ({
     ...doc,
