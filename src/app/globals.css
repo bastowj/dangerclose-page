@@ -217,10 +217,48 @@
     @apply text-sm text-[color:var(--foreground-muted)];
   }
   .blog-cover-image {
-    @apply rounded-lg w-full object-cover;
+    @apply rounded-lg w-full max-w-2xl mx-auto object-cover;
   }
   .blog-excerpt {
     @apply text-[color:var(--foreground-muted)];
+  }
+
+  /* Latest (homepage) */
+  .latest {
+    @apply container mx-auto max-w-6xl py-16 md:px-20;
+  }
+  .latest-title {
+    @apply pb-12 text-center text-3xl font-bold;
+  }
+  .latest-empty {
+    @apply text-center text-[color:var(--foreground-muted)];
+  }
+  .latest-grid {
+    @apply grid gap-10 list-none p-0 sm:grid-cols-2 lg:grid-cols-3;
+  }
+  .latest-item {
+    @apply flex flex-col gap-3;
+  }
+  .latest-image-wrap {
+    @apply block overflow-hidden rounded-lg;
+  }
+  .latest-image {
+    @apply w-full h-auto object-cover transition-opacity;
+  }
+  .latest-image-wrap:hover .latest-image {
+    @apply opacity-80;
+  }
+  .latest-body {
+    @apply flex flex-col gap-1;
+  }
+  .latest-date {
+    @apply text-sm text-[color:var(--foreground-muted)];
+  }
+  .latest-item-title {
+    @apply text-xl font-bold;
+  }
+  .latest-excerpt {
+    @apply mt-1 text-base leading-relaxed text-[color:var(--foreground-muted)];
   }
 
   /* Showcase (homepage) */
@@ -255,12 +293,53 @@
     @apply leading-relaxed;
   }
 
+  /* Projects index */
+  .projects-page-title {
+    @apply text-4xl font-bold mb-8;
+  }
+  .projects-empty {
+    @apply text-[color:var(--foreground-muted)];
+  }
+  .projects-grid {
+    @apply flex flex-col gap-6 list-none p-0;
+  }
+  .project-card {
+    @apply flex flex-col sm:flex-row gap-6 w-full rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] p-6 overflow-hidden;
+  }
+  .project-card-image-wrap {
+    @apply block overflow-hidden rounded-xl sm:w-64 sm:shrink-0;
+  }
+  .project-card-image {
+    @apply w-full h-auto object-cover transition-opacity;
+  }
+  .project-card-image-wrap:hover .project-card-image {
+    @apply opacity-80;
+  }
+  .project-card-body {
+    @apply flex flex-col gap-1 flex-1;
+  }
+  .project-card-title {
+    @apply text-2xl font-bold;
+  }
+  .project-card-subtitle {
+    @apply text-base text-[color:var(--foreground-muted)];
+  }
+  .project-card-ruleset {
+    @apply text-sm text-[color:var(--foreground-muted)];
+  }
+  .project-card-excerpt {
+    @apply mt-2 text-base leading-relaxed;
+  }
+
   /* Project page */
   .project-header {
     @apply mb-8;
   }
   .project-title {
-    @apply text-4xl font-bold mb-3;
+    @apply text-4xl font-bold mb-1;
+  }
+  .project-subtitle {
+    @apply text-xl text-[color:var(--foreground-muted)] mb-3;
   }
   .project-meta {
     @apply flex gap-2 text-sm text-[color:var(--foreground-muted)] mb-4;

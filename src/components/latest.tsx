@@ -1,57 +1,48 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function latest() {
-  return (
-    <div className="container mx-auto py-16 md:px-20">
-      <>
-        <h1 className="pb-12 text-center text-3xl font-bold">Latest Posts</h1>
-        <div className="grid gap-14 md:grid-cols-2 lg:grid-cols-3">
-          {Post()}
-          {Post()}
-          {Post()}
-          {Post()}
-          {Post()}
-          {Post()}
-          {Post()}
-          {Post()}
-        </div>
-      </>
-    </div>
-  );
-}
+import { getAllBlogPosts } from "@/lib/blog";
 
-function Post() {
+const LATEST_LIMIT = 6;
+
+export default function Latest() {
+  const posts = getAllBlogPosts().slice(0, LATEST_LIMIT);
+
   return (
-    <div className="item">
-      <div className="image">
-        {" "}
-        <Link href={"/"}>
-          <Image
-            src={"/images/showcase1.jpg"}
-            width={200}
-            height={200}
-            alt="image"
-          />
-        </Link>
-      </div>
-      <div className="info flex flex-col justify-center py-4">
-        <div className="cat mb-2">
-          <Link href={"/"}>Categories - Date</Link>
-        </div>
-        <div className="title mb-5">
-          <Link href={"/"} className="text-2xl md:text-3xl">
-            Lorem ipsum
-          </Link>
-        </div>
-        <div className="description">
-          <Link href={"/"} className="">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua.
-          </Link>
-        </div>
-      </div>
-    </div>
+    <section className="latest">
+      <h2 className="latest-title">Latest Posts</h2>
+      {posts.length === 0 ? (
+        <p className="latest-empty">No posts yet.</p>
+      ) : (
+        <ul className="latest-grid">
+          {posts.map((post) => {
+            const { title, date, excerpt, coverImage } = post.frontmatter;
+            const href = `/texts/${post.slug}`;
+            return (
+              <li key={post.slug} className="latest-item">
+                {coverImage && (
+                  <Link href={href} className="latest-image-wrap">
+                    <Image
+                      src={coverImage}
+                      alt={title}
+                      width={400}
+                      height={300}
+                      className="latest-image"
+                    />
+                  </Link>
+                )}
+                <div className="latest-body">
+                  <p className="latest-date">{date}</p>
+                  <h3 className="latest-item-title">
+                    <Link href={href}>{title}</Link>
+                  </h3>
+                  {excerpt && <p className="latest-excerpt">{excerpt}</p>}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </section>
   );
 }

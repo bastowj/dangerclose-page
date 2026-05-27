@@ -2,8 +2,8 @@ import { allProjects } from "content-collections";
 
 export interface ProjectFrontmatter {
   title: string;
-  date: string;
-  excerpt: string;
+  subTitle?: string;
+  excerpt?: string;
   ruleset: string;
   coverImage?: string;
 }
@@ -21,8 +21,8 @@ function toProject(doc: ProjectDoc): Project {
     slug: doc.slug,
     frontmatter: {
       title: doc.title,
-      date: doc.date,
-      excerpt: doc.excerpt,
+      subTitle: doc.subTitle ?? undefined,
+      excerpt: doc.excerpt ?? undefined,
       ruleset: doc.ruleset,
       coverImage: doc.coverImage ?? undefined,
     },
@@ -40,13 +40,7 @@ export function getProjectBySlug(slug: string): Project | null {
 }
 
 export function getAllProjects(): Project[] {
-  return allProjects
-    .map(toProject)
-    .sort(
-      (a, b) =>
-        new Date(b.frontmatter.date).getTime() -
-        new Date(a.frontmatter.date).getTime(),
-    );
+  return allProjects.map(toProject);
 }
 
 export function getAllRulesets(): string[] {

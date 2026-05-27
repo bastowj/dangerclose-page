@@ -1,13 +1,14 @@
 {
   "src": "/images/showcase1.jpg",
-  "alt": "Example finished mini on a desert base",
-  "caption": "First test mini for the example project.",
+  "alt": "Mini in white cloth with spear on unfinished base",
+  "caption": "Irish foot soldier",
   "date": "2026-05-25",
-  "project": "example-project",
+  "project": "saga",
   "categories": [
-    "saga",
-    "irish",
-    "workbench"
+    "SAGA",
+    "Irish",
+    "Workbench",
+    "Wargames Atlantic"
   ],
   "showcase": true
 }

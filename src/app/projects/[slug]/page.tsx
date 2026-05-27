@@ -41,10 +41,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <article className="main-content-wrapper">
       <header className="project-header">
         <h1 className="project-title">{project.frontmatter.title}</h1>
+        {project.frontmatter.subTitle && (
+          <p className="project-subtitle">{project.frontmatter.subTitle}</p>
+        )}
         <div className="project-meta">
-          <span>{project.frontmatter.ruleset}</span>
-          <span>·</span>
-          <span>{project.frontmatter.date}</span>
+          <span>
+            <span className="project-meta-label">Ruleset:</span>{" "}
+            {project.frontmatter.ruleset}
+          </span>
         </div>
         {project.frontmatter.excerpt && (
           <p className="project-excerpt">{project.frontmatter.excerpt}</p>

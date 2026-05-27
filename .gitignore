@@ -49,3 +49,5 @@ memory
 
 # playwright
 .playwright-cli
+
+/local

@@ -32,8 +32,8 @@ const projects = defineCollection({
   schema: z.object({
     content: z.string(),
     title: z.string(),
-    date: z.string(),
-    excerpt: z.string(),
+    subTitle: z.string().nullish(),
+    excerpt: z.string().nullish(),
     ruleset: z.string(),
     coverImage: z.string().nullish(),
   }),
