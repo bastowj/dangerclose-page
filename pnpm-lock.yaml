@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@content-collections/core':
-        specifier: ^0.15.0
-        version: 0.15.0(typescript@5.9.3)
+        specifier: ^0.15.1
+        version: 0.15.1(typescript@5.9.3)
       '@content-collections/mdx':
         specifier: ^0.2.2
-        version: 0.2.2(@content-collections/core@0.15.0(typescript@5.9.3))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+        version: 0.2.2(@content-collections/core@0.15.1(typescript@5.9.3))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@content-collections/next':
         specifier: ^0.2.11
-        version: 0.2.11(@content-collections/core@0.15.0(typescript@5.9.3))(next@16.2.6(@babel/core@7.29.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))
+        version: 0.2.11(@content-collections/core@0.15.1(typescript@5.9.3))(next@16.2.6(@babel/core@7.29.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.2.6)
@@ -36,8 +36,8 @@ importers:
         specifier: ^0.34.5
         version: 0.34.5
       swiper:
-        specifier: ^12.1.4
-        version: 12.1.4
+        specifier: ^12.2.0
+        version: 12.2.0
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -91,8 +91,8 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0
       ts-jest:
-        specifier: ^29.4.10
-        version: 29.4.10(@babel/core@7.29.0)(@jest/transform@30.4.1)(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.29.0))(esbuild@0.25.12)(jest-util@30.4.1)(jest@30.4.2(@types/node@25.9.1))(typescript@5.9.3)
+        specifier: ^29.4.11
+        version: 29.4.11(@babel/core@7.29.0)(@jest/transform@30.4.1)(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.29.0))(esbuild@0.25.12)(jest-util@30.4.1)(jest@30.4.2(@types/node@25.9.1))(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -278,8 +278,8 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@content-collections/core@0.15.0':
-    resolution: {integrity: sha512-GCbG7p+7cGnPUAyoOPoT8ABsd9D6VWF17YJUl+IHJWr+VYTYNKyDaQtJ+6Pfg55GvtuW3gCfqJkOx6Pu2SB6YA==}
+  '@content-collections/core@0.15.1':
+    resolution: {integrity: sha512-uQmhvvsSgNJs7QOi4+IgvDhv7v1yueCr6n7WgMahUDFeVchML/WFl9D2vrklxUnXY+YaBGTkc2+q8PcEVM19WA==}
     peerDependencies:
       typescript: ^5.0.2 || ^6.0.0
 
@@ -3512,8 +3512,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  swiper@12.1.4:
-    resolution: {integrity: sha512-bihiwoKMOQwW8FfdUbo1DgkVH25E+4ZELIq0oopL1KTKBteLuaTMi/wwFjMxtlhTkk45k3XQ89D1Fvv0spSqBA==}
+  swiper@12.2.0:
+    resolution: {integrity: sha512-K8uXsBZU6ME97Ia3xbBge8IRCnR1lOmIILzvY/jGVic7dSTQ530s3uO8RvXbPUtkkXLWIwmZLRPbtDxRWVAFdg==}
     engines: {node: '>= 4.7.0'}
 
   symbol-tree@3.2.4:
@@ -3575,8 +3575,8 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
 
-  ts-jest@29.4.10:
-    resolution: {integrity: sha512-vMTlTTtvz5aKZgzOoc7DQ5TzAL2fCzl8JnG1+ZpwjQa/g0xLlwE44yQ+1Cao9ZP1xVv9y5g34IFXEiqGOGFBUA==}
+  ts-jest@29.4.11:
+    resolution: {integrity: sha512-IrFl7l9AuB/qrNw5quqvAv/hmKMb8dhWOH4jQOGo0Oq8tCeo1O86/iTFG1FaRimgUkF13l4PcepO8ATFT6Ns4g==}
     engines: {node: ^14.15.0 || ^16.10.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -4043,7 +4043,7 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@content-collections/core@0.15.0(typescript@5.9.3)':
+  '@content-collections/core@0.15.1(typescript@5.9.3)':
     dependencies:
       '@standard-schema/spec': 1.1.0
       camelcase: 8.0.0
@@ -4058,13 +4058,13 @@ snapshots:
       typescript: 5.9.3
       yaml: 2.9.0
 
-  '@content-collections/integrations@0.5.0(@content-collections/core@0.15.0(typescript@5.9.3))':
+  '@content-collections/integrations@0.5.0(@content-collections/core@0.15.1(typescript@5.9.3))':
     dependencies:
-      '@content-collections/core': 0.15.0(typescript@5.9.3)
+      '@content-collections/core': 0.15.1(typescript@5.9.3)
 
-  '@content-collections/mdx@0.2.2(@content-collections/core@0.15.0(typescript@5.9.3))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
+  '@content-collections/mdx@0.2.2(@content-collections/core@0.15.1(typescript@5.9.3))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
     dependencies:
-      '@content-collections/core': 0.15.0(typescript@5.9.3)
+      '@content-collections/core': 0.15.1(typescript@5.9.3)
       esbuild: 0.25.12
       mdx-bundler: 10.1.1(esbuild@0.25.12)
       react: 19.2.6
@@ -4073,10 +4073,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@content-collections/next@0.2.11(@content-collections/core@0.15.0(typescript@5.9.3))(next@16.2.6(@babel/core@7.29.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))':
+  '@content-collections/next@0.2.11(@content-collections/core@0.15.1(typescript@5.9.3))(next@16.2.6(@babel/core@7.29.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))':
     dependencies:
-      '@content-collections/core': 0.15.0(typescript@5.9.3)
-      '@content-collections/integrations': 0.5.0(@content-collections/core@0.15.0(typescript@5.9.3))
+      '@content-collections/core': 0.15.1(typescript@5.9.3)
+      '@content-collections/integrations': 0.5.0(@content-collections/core@0.15.1(typescript@5.9.3))
       next: 16.2.6(@babel/core@7.29.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
 
   '@csstools/color-helpers@5.1.0': {}
@@ -7964,7 +7964,7 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  swiper@12.1.4: {}
+  swiper@12.2.0: {}
 
   symbol-tree@3.2.4: {}
 
@@ -8017,7 +8017,7 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  ts-jest@29.4.10(@babel/core@7.29.0)(@jest/transform@30.4.1)(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.29.0))(esbuild@0.25.12)(jest-util@30.4.1)(jest@30.4.2(@types/node@25.9.1))(typescript@5.9.3):
+  ts-jest@29.4.11(@babel/core@7.29.0)(@jest/transform@30.4.1)(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.29.0))(esbuild@0.25.12)(jest-util@30.4.1)(jest@30.4.2(@types/node@25.9.1))(typescript@5.9.3):
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
