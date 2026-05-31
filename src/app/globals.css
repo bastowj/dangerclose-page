@@ -225,7 +225,7 @@
 
   /* Latest (homepage) */
   .latest {
-    @apply container mx-auto max-w-6xl py-16 md:px-20;
+    @apply container mx-auto max-w-6xl px-4 py-16 sm:px-8 md:px-20;
   }
   .latest-title {
     @apply pb-12 text-center text-3xl font-bold;
@@ -263,19 +263,19 @@
 
   /* Showcase (homepage) */
   .showcase {
-    @apply container mx-auto max-w-6xl pt-8 pb-16 md:px-20 md:pt-16;
+    @apply container mx-auto max-w-6xl px-4 pt-8 pb-16 sm:px-8 md:px-20 md:pt-16;
   }
   .showcase-title {
     @apply pb-12 text-center text-3xl font-bold;
   }
   .showcase-slide {
-    @apply mx-20 grid grid-cols-1 place-items-center gap-10 md:grid-cols-2;
+    @apply grid grid-cols-1 place-items-center gap-10 md:mx-20 md:grid-cols-2;
   }
   .showcase-image-wrap {
-    @apply flex justify-center;
+    @apply flex w-full justify-center;
   }
   .showcase-image {
-    @apply rounded-full;
+    @apply h-auto w-full max-w-[400px] rounded-full;
   }
   .showcase-meta {
     @apply mb-2 text-sm text-[color:var(--foreground-muted)];
