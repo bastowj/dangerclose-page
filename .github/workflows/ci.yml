@@ -4,15 +4,16 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+# Every action below runs natively on Node 24, so no
+# FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 shim is needed. Keep it that way when
+# bumping: a Node 20 action would reintroduce the deprecation warning.
 jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
@@ -25,9 +26,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v6
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
         with:
           push: false
           cache-from: type=gha
