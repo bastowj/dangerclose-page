@@ -1,0 +1,33 @@
+# CVE log
+
+Audit findings and what was decided. Current state: `pnpm audit`.
+Transitive pins are raised via `pnpm.overrides` in `package.json`.
+
+## Open
+
+**CVE-2026-14257** / GHSA-mh99-v99m-4gvg — brace-expansion, high, OOM DoS.
+Present as 1.1.16 (`eslint>minimatch`) and 2.1.2 (`jest>@jest/core>@jest/reporters>glob>minimatch`).
+
+Accepted. Fixed only in 5.0.8; the 1.x and 2.x lines have no backport and are already at their latest. v5 exports `{ expand }` rather than a callable, so an override breaks `minimatch`, which calls it as a function — verified: pinning it makes `eslint .` throw `TypeError: Error while loading rule 'react/display-name'`. Both paths are dev-only, reached only by glob matching over local file paths — no runtime exposure. Revisit when `minimatch` moves to a v5-compatible release.
+
+## 2026-07-26 — added `@content-collections/cli`
+
+No new findings. Added as a devDependency so `pnpm typecheck` can generate the
+collections itself; audit unchanged at the two accepted paths above.
+
+## 2026-07-26
+
+7 of 7 findings resolved, then a dependency removal cleared an eighth path.
+
+| Package         | From → To         | How                              | Advisories                                                                        |
+| --------------- | ----------------- | -------------------------------- | --------------------------------------------------------------------------------- |
+| next            | 16.2.10 → 16.2.12 | version bump                     | patch-level, in range                                                             |
+| postcss         | 8.4.31 → 8.5.23   | override, `next` pins it exactly | 3 (1 moderate, 2 high)                                                            |
+| sharp           | 0.34.5 → 0.35.3   | override, `next` pins `^0.34.5`  | 1 high (libvips)                                                                  |
+| uuid            | 9.0.1 → 11.1.1    | override, `mdx-bundler` pins 9   | 1 moderate, GHSA-w5hq-g745-h8pq (missing buffer bounds check in v3/v5/v6)          |
+| brace-expansion | —                 | dropped `@eslint/eslintrc`       | removed the `eslintrc>minimatch` path; see Open for the two that remain           |
+
+Rejected upgrades, for the record — both break the build, so they are not audit workarounds:
+
+- **eslint 9 → 10**: `eslint-config-next` bundles `eslint-plugin-react@7.37.5`, which crashes on ESLint 10 (`contextOrFilename.getFilename is not a function`).
+- **typescript 6 → 7**: `ts-jest` declares `typescript: ">=4.3 <7"`.
