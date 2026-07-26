@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
 import { MDXContent } from "@/components/MDXContent";
-import { getBlogPostBySlug, getBlogPostSlugs } from "@/lib/blog";
+import { categoryHref, getBlogPostBySlug, getBlogPostSlugs } from "@/lib/blog";
+import { buildMetadata } from "@/lib/metadata";
 
 const cachedGetBlogPostBySlug = cache(getBlogPostBySlug);
 
 interface TextPageProps {
   params: Promise<{ slug: string }>;
 }
+
+// All content is known at build time, so an unknown slug 404s instead of
+// being rendered on demand.
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return getBlogPostSlugs().map((slug) => ({ slug }));
@@ -22,10 +28,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = cachedGetBlogPostBySlug(slug);
   if (!post) notFound();
-  return {
-    title: post.frontmatter.title,
-    description: post.frontmatter.excerpt,
-  };
+  const { title, excerpt, coverImage, date, author } = post;
+  return buildMetadata({
+    title,
+    description: excerpt,
+    path: `/texts/${slug}`,
+    image: coverImage,
+    type: "article",
+    publishedTime: date,
+    authors: author ? [author] : undefined,
+  });
 }
 
 export default async function TextPage({ params }: TextPageProps) {
@@ -33,8 +45,7 @@ export default async function TextPage({ params }: TextPageProps) {
   const post = cachedGetBlogPostBySlug(slug);
   if (!post) notFound();
 
-  const { title, date, excerpt, categories, coverImage, author } =
-    post.frontmatter;
+  const { title, date, excerpt, categories, coverImage, author } = post;
 
   return (
     <article className="main-content-wrapper">
@@ -47,9 +58,13 @@ export default async function TextPage({ params }: TextPageProps) {
         {categories.length > 0 && (
           <div className="project-meta">
             {categories.map((category) => (
-              <span key={category} className="blog-category-link">
+              <Link
+                key={category}
+                href={categoryHref(category)}
+                className="blog-category-link"
+              >
                 {category}
-              </span>
+              </Link>
             ))}
           </div>
         )}

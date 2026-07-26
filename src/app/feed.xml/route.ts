@@ -15,29 +15,33 @@ const cdata = (s: string) =>
 export async function GET() {
   const posts = getAllBlogPosts();
   const baseUrl = SITE_CONFIG.baseUrl;
+  // Posts are sorted newest first, so the head is the most recent publication.
+  const lastBuildDate = posts.length
+    ? new Date(posts[0].date).toUTCString()
+    : "";
 
   const items = posts
     .map(
       (post) => `
     <item>
-      <title>${cdata(post.frontmatter.title)}</title>
+      <title>${cdata(post.title)}</title>
       <link>${baseUrl}/texts/${encodeURIComponent(post.slug)}</link>
       <guid>${baseUrl}/texts/${encodeURIComponent(post.slug)}</guid>
-      <pubDate>${new Date(post.frontmatter.date).toUTCString()}</pubDate>
-      <description>${cdata(post.frontmatter.excerpt)}</description>
-      ${post.frontmatter.author ? `<author>${escapeXml(post.frontmatter.author)}</author>` : ""}
-      ${post.frontmatter.categories.map((c) => `<category>${escapeXml(c)}</category>`).join("\n      ")}
+      <pubDate>${new Date(post.date).toUTCString()}</pubDate>
+      <description>${cdata(post.excerpt)}</description>
+      ${post.author ? `<dc:creator>${cdata(post.author)}</dc:creator>` : ""}
+      ${post.categories.map((c) => `<category>${escapeXml(c)}</category>`).join("\n      ")}
     </item>`,
     )
     .join("");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>${escapeXml(SITE_CONFIG.defaultTitle)}</title>
     <link>${baseUrl}</link>
     <description>${escapeXml(SITE_CONFIG.description)}</description>
-    <language>en</language>
+    <language>en</language>${lastBuildDate ? `\n    <lastBuildDate>${lastBuildDate}</lastBuildDate>` : ""}
     <atom:link href="${baseUrl}/feed.xml" rel="self" type="application/rss+xml"/>
     ${items}
   </channel>

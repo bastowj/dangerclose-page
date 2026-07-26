@@ -5,14 +5,19 @@ import { notFound } from "next/navigation";
 import { cache } from "react";
 
 import { MDXContent } from "@/components/MDXContent";
-import { getProjectBySlug, getProjectSlugs } from "@/lib/projects";
+import { getProjectBySlug, getProjectSlugs, rulesetHref } from "@/lib/projects";
 import { getImagesByProject } from "@/lib/images";
+import { buildMetadata } from "@/lib/metadata";
 
 const cachedGetProjectBySlug = cache(getProjectBySlug);
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
 }
+
+// All content is known at build time, so an unknown slug 404s instead of
+// being rendered on demand.
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return getProjectSlugs().map((slug) => ({ slug }));
@@ -24,10 +29,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = cachedGetProjectBySlug(slug);
   if (!project) notFound();
-  return {
-    title: project.frontmatter.title,
-    description: project.frontmatter.excerpt,
-  };
+  const { title, excerpt, subTitle, coverImage } = project;
+  return buildMetadata({
+    title,
+    description: excerpt ?? subTitle,
+    path: `/projects/${slug}`,
+    image: coverImage,
+  });
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -40,18 +48,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return (
     <article className="main-content-wrapper">
       <header className="project-header">
-        <h1 className="project-title">{project.frontmatter.title}</h1>
-        {project.frontmatter.subTitle && (
-          <p className="project-subtitle">{project.frontmatter.subTitle}</p>
+        <h1 className="project-title">{project.title}</h1>
+        {project.subTitle && (
+          <p className="project-subtitle">{project.subTitle}</p>
         )}
         <div className="project-meta">
           <span>
             <span className="project-meta-label">Ruleset:</span>{" "}
-            {project.frontmatter.ruleset}
+            <Link href={rulesetHref(project.ruleset)} className="link">
+              {project.ruleset}
+            </Link>
           </span>
         </div>
-        {project.frontmatter.excerpt && (
-          <p className="project-excerpt">{project.frontmatter.excerpt}</p>
+        {project.excerpt && (
+          <p className="project-excerpt">{project.excerpt}</p>
         )}
       </header>
 

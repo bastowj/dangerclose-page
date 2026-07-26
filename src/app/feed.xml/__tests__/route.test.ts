@@ -13,18 +13,16 @@ import type { BlogPost } from "@/lib/blog";
 
 jest.mock("@/lib/blog");
 
-function makePost(overrides: Partial<BlogPost["frontmatter"]> = {}): BlogPost {
+function makePost(overrides: Partial<BlogPost> = {}): BlogPost {
   return {
     slug: "test-post",
     body: "",
-    frontmatter: {
-      title: "Test Post",
-      date: "2024-06-01",
-      excerpt: "A test excerpt.",
-      categories: ["Painting"],
-      author: "Danger Close! Painting",
-      ...overrides,
-    },
+    title: "Test Post",
+    date: "2024-06-01",
+    excerpt: "A test excerpt.",
+    categories: ["Painting"],
+    author: "Danger Close! Painting",
+    ...overrides,
   };
 }
 
@@ -59,18 +57,42 @@ describe("GET /feed.xml", () => {
     expect(xml).toContain(new Date("2024-06-01").toUTCString());
   });
 
-  it("includes author when present", async () => {
-    jest.spyOn(blog, "getAllBlogPosts").mockReturnValue([makePost()]);
+  it("declares the Dublin Core namespace used for creator", async () => {
     const xml = await (await GET()).text();
-    expect(xml).toContain("<author>Danger Close! Painting</author>");
+    expect(xml).toContain('xmlns:dc="http://purl.org/dc/elements/1.1/"');
   });
 
-  it("omits author tag when not present", async () => {
+  it("includes author as dc:creator when present", async () => {
+    jest.spyOn(blog, "getAllBlogPosts").mockReturnValue([makePost()]);
+    const xml = await (await GET()).text();
+    // RSS 2.0 <author> requires an email address, so use dc:creator for a name.
+    expect(xml).toContain(
+      "<dc:creator><![CDATA[Danger Close! Painting]]></dc:creator>",
+    );
+    expect(xml).not.toContain("<author>");
+  });
+
+  it("omits the creator tag when no author is present", async () => {
     jest
       .spyOn(blog, "getAllBlogPosts")
       .mockReturnValue([makePost({ author: undefined })]);
     const xml = await (await GET()).text();
-    expect(xml).not.toContain("<author>");
+    expect(xml).not.toContain("<dc:creator>");
+  });
+
+  it("sets lastBuildDate from the newest post", async () => {
+    jest
+      .spyOn(blog, "getAllBlogPosts")
+      .mockReturnValue([makePost({ date: "2024-06-01" })]);
+    const xml = await (await GET()).text();
+    expect(xml).toContain(
+      `<lastBuildDate>${new Date("2024-06-01").toUTCString()}</lastBuildDate>`,
+    );
+  });
+
+  it("omits lastBuildDate when there are no posts", async () => {
+    const xml = await (await GET()).text();
+    expect(xml).not.toContain("<lastBuildDate>");
   });
 
   it("includes categories", async () => {
@@ -83,10 +105,12 @@ describe("GET /feed.xml", () => {
   });
 
   it("renders one item per post", async () => {
-    jest.spyOn(blog, "getAllBlogPosts").mockReturnValue([
-      makePost({ title: "Post A" }),
-      makePost({ title: "Post B" }),
-    ]);
+    jest
+      .spyOn(blog, "getAllBlogPosts")
+      .mockReturnValue([
+        makePost({ title: "Post A" }),
+        makePost({ title: "Post B" }),
+      ]);
     const xml = await (await GET()).text();
     expect(xml).toContain("<![CDATA[Post A]]>");
     expect(xml).toContain("<![CDATA[Post B]]>");

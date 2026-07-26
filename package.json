@@ -6,8 +6,10 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0 && prettier --check .",
+    "typecheck": "content-collections build && tsc --noEmit",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "jest"
   },
   "engines": {
@@ -19,39 +21,45 @@
       "esbuild",
       "sharp",
       "unrs-resolver"
-    ]
+    ],
+    "comment-overrides": "Transitive advisory fixes. brace-expansion@5 is deliberately NOT overridden: eslint's minimatch@3 is incompatible with it, and the ReDoS only affects local config glob matching at lint time.",
+    "overrides": {
+      "postcss@<8.5.18": "^8.5.23",
+      "sharp@<0.35.0": "^0.35.3",
+      "uuid@<11.1.1": "^11.1.1"
+    }
   },
   "dependencies": {
     "@content-collections/core": "^0.15.2",
     "@content-collections/mdx": "^0.2.2",
     "@content-collections/next": "^0.2.11",
     "@heroicons/react": "^2.2.0",
-    "next": "^16.2.10",
+    "next": "^16.2.12",
     "next-themes": "^0.4.6",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "sharp": "^0.35.3",
-    "swiper": "^14.0.1",
+    "swiper": "^14.0.6",
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.5",
-    "@tailwindcss/postcss": "^4.3.2",
-    "@testing-library/jest-dom": "^6.9.1",
+    "@content-collections/cli": "^0.1.9",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.9.1",
+    "@types/node": "^25.9.5",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^9.39.4",
-    "eslint-config-next": "^16.2.10",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.2.12",
     "eslint-config-prettier": "^10.1.8",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
-    "prettier": "^3.9.4",
-    "tailwindcss": "^4.3.2",
-    "ts-jest": "^29.4.11",
+    "prettier": "^3.9.6",
+    "tailwindcss": "^4.3.3",
+    "ts-jest": "^29.4.12",
     "typescript": "^6.0.3"
   }
 }

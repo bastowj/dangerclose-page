@@ -17,15 +17,32 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
+  // Resolves every relative URL below (and in nested routes) against the site
+  // origin instead of localhost.
+  metadataBase: new URL(SITE_CONFIG.baseUrl),
   title: {
     template: `%s - ${SITE_CONFIG.defaultTitle}`,
     default: SITE_CONFIG.defaultTitle,
   },
   description: SITE_CONFIG.description,
   alternates: {
+    canonical: "/",
     types: {
-      "application/rss+xml": `${SITE_CONFIG.baseUrl}/feed.xml`,
+      "application/rss+xml": "/feed.xml",
     },
+  },
+  openGraph: {
+    type: "website",
+    siteName: SITE_CONFIG.defaultTitle,
+    title: SITE_CONFIG.defaultTitle,
+    description: SITE_CONFIG.description,
+    url: "/",
+    locale: SITE_CONFIG.locale,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_CONFIG.defaultTitle,
+    description: SITE_CONFIG.description,
   },
   icons: {
     icon: [

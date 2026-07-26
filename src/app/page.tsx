@@ -1,5 +1,5 @@
-import Showcase, { type ShowcaseSlide } from "@/components/showcase";
-import Latest from "@/components/latest";
+import { Latest } from "@/components/Latest";
+import { Showcase, type ShowcaseSlide } from "@/components/Showcase";
 import { getShowcaseImages } from "@/lib/images";
 import { getProjectBySlug } from "@/lib/projects";
 
@@ -13,7 +13,7 @@ export default function Home() {
       caption: image.caption ?? image.alt,
       date: image.date,
       categories: image.categories,
-      projectTitle: project?.frontmatter.title ?? null,
+      projectTitle: project?.title ?? null,
       projectHref: project ? `/projects/${project.slug}` : null,
       href: `/images/${image.slug}`,
     };

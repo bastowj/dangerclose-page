@@ -1,39 +1,39 @@
 import { allTexts } from "content-collections";
 
-export interface BlogPostFrontmatter {
+import { assertSafeSlug, findBySlug, slugify } from "@/lib/slug";
+
+export const TEXTS_CATEGORY_BASE = "/texts/category";
+
+export interface BlogPost {
+  slug: string;
   title: string;
   date: string;
   excerpt: string;
   categories: string[];
   coverImage?: string;
   author?: string;
-}
-
-export interface BlogPost {
-  slug: string;
-  frontmatter: BlogPostFrontmatter;
   body: string;
 }
 
 type TextDoc = (typeof allTexts)[number];
 
+// content-collections types nullish frontmatter as `T | null | undefined`;
+// normalising to `undefined` keeps optional-property access idiomatic.
 function toBlogPost(doc: TextDoc): BlogPost {
   return {
-    slug: doc.slug,
-    frontmatter: {
-      title: doc.title,
-      date: doc.date,
-      excerpt: doc.excerpt,
-      categories: doc.categories,
-      coverImage: doc.coverImage ?? undefined,
-      author: doc.author ?? undefined,
-    },
+    slug: assertSafeSlug(doc.slug, "Post"),
+    title: doc.title,
+    date: doc.date,
+    excerpt: doc.excerpt,
+    categories: doc.categories,
+    coverImage: doc.coverImage ?? undefined,
+    author: doc.author ?? undefined,
     body: doc.body,
   };
 }
 
 export function getBlogPostSlugs(): string[] {
-  return allTexts.map((doc) => doc.slug);
+  return allTexts.map((doc) => assertSafeSlug(doc.slug, "Post"));
 }
 
 export function getBlogPostBySlug(slug: string): BlogPost | null {
@@ -44,11 +44,7 @@ export function getBlogPostBySlug(slug: string): BlogPost | null {
 export function getAllBlogPosts(): BlogPost[] {
   return allTexts
     .map(toBlogPost)
-    .sort(
-      (a, b) =>
-        new Date(b.frontmatter.date).getTime() -
-        new Date(a.frontmatter.date).getTime(),
-    );
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function getAllCategories(): string[] {
@@ -62,7 +58,21 @@ export function getAllCategories(): string[] {
 }
 
 export function getBlogPostsByCategory(category: string): BlogPost[] {
-  return getAllBlogPosts().filter((post) =>
-    post.frontmatter.categories.includes(category),
-  );
+  return getAllBlogPosts().filter((post) => post.categories.includes(category));
+}
+
+export function categoryHref(category: string): string {
+  return `${TEXTS_CATEGORY_BASE}/${slugify(category)}`;
+}
+
+/** Resolves a URL segment back to its category, or null if unknown. */
+export function getCategoryBySlug(slug: string): string | null {
+  return findBySlug(getAllCategories(), slug);
+}
+
+export function getCategoryFilterItems(): { label: string; href: string }[] {
+  return getAllCategories().map((label) => ({
+    label,
+    href: categoryHref(label),
+  }));
 }

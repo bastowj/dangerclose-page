@@ -2,36 +2,56 @@ import { MDXContent as MDXContentBase } from "@content-collections/mdx/react";
 import Image from "next/image";
 import Link from "next/link";
 
+/** Keeps our base class while preserving classes MDX adds (e.g. language-ts). */
+const cx = (base: string, extra?: string) =>
+  extra ? `${base} ${extra}` : base;
+
 const components = {
-  h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1 className="mdx-h1" {...props} />
+  h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h1 {...props} className={cx("mdx-h1", className)} />
   ),
-  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="mdx-h2" {...props} />
+  h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h2 {...props} className={cx("mdx-h2", className)} />
   ),
-  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="mdx-h3" {...props} />
+  h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h3 {...props} className={cx("mdx-h3", className)} />
   ),
-  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="mdx-p" {...props} />
+  p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
+    <p {...props} className={cx("mdx-p", className)} />
   ),
-  ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="mdx-ul" {...props} />
+  ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
+    <ul {...props} className={cx("mdx-ul", className)} />
   ),
-  ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
-    <ol className="mdx-ol" {...props} />
+  ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
+    <ol {...props} className={cx("mdx-ol", className)} />
   ),
-  li: (props: React.HTMLAttributes<HTMLLIElement>) => (
-    <li className="mdx-li" {...props} />
+  li: ({ className, ...props }: React.HTMLAttributes<HTMLLIElement>) => (
+    <li {...props} className={cx("mdx-li", className)} />
   ),
-  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-    const href = props.href || "#";
-    return <Link href={href} className="mdx-a" {...props} />;
+  a: ({
+    href = "#",
+    className,
+    ...props
+  }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+    // next/link would apply client-side routing semantics to off-site URLs and
+    // would not carry the rel hardening, so route those through a plain anchor.
+    if (/^(https?:)?\/\//.test(href) || href.startsWith("mailto:")) {
+      return (
+        <a
+          {...props}
+          href={href}
+          className={cx("mdx-a", className)}
+          target="_blank"
+          rel="noopener noreferrer"
+        />
+      );
+    }
+    return <Link {...props} href={href} className={cx("mdx-a", className)} />;
   },
   img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
     const src = props.src?.toString() || "";
     return (
-      <div className="my-6">
+      <div className="mdx-img-wrap">
         <Image
           src={src}
           alt={props.alt || ""}
@@ -43,14 +63,17 @@ const components = {
       </div>
     );
   },
-  blockquote: (props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) => (
-    <blockquote className="mdx-blockquote" {...props} />
+  blockquote: ({
+    className,
+    ...props
+  }: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) => (
+    <blockquote {...props} className={cx("mdx-blockquote", className)} />
   ),
-  code: (props: React.HTMLAttributes<HTMLElement>) => (
-    <code className="mdx-code" {...props} />
+  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+    <code {...props} className={cx("mdx-code", className)} />
   ),
-  pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
-    <pre className="mdx-pre" {...props} />
+  pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
+    <pre {...props} className={cx("mdx-pre", className)} />
   ),
 };
 
@@ -60,7 +83,7 @@ interface MDXContentProps {
 
 export function MDXContent({ code }: MDXContentProps) {
   return (
-    <div className="prose dark:prose-invert max-w-none">
+    <div className="mdx-content">
       <MDXContentBase code={code} components={components} />
     </div>
   );

@@ -5,7 +5,7 @@ import { getAllBlogPosts } from "@/lib/blog";
 
 const LATEST_LIMIT = 6;
 
-export default function Latest() {
+export function Latest() {
   const posts = getAllBlogPosts().slice(0, LATEST_LIMIT);
 
   return (
@@ -16,7 +16,7 @@ export default function Latest() {
       ) : (
         <ul className="latest-grid">
           {posts.map((post) => {
-            const { title, date, excerpt, coverImage } = post.frontmatter;
+            const { title, date, excerpt, coverImage } = post;
             const href = `/texts/${post.slug}`;
             return (
               <li key={post.slug} className="latest-item">

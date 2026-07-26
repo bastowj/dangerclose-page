@@ -1,60 +1,47 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 
-import { getAllProjects } from "@/lib/projects";
+import { CategoryFilter } from "@/components/CategoryFilter";
+import { CardGrid, ContentCard } from "@/components/ContentCard";
+import { buildMetadata } from "@/lib/metadata";
+import { getAllProjects, getRulesetFilterItems } from "@/lib/projects";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Projects",
   description: "Painting and wargaming projects",
-};
+  path: "/projects",
+});
 
 export default function ProjectsPage() {
   const projects = getAllProjects();
 
   return (
     <div className="main-content-wrapper">
-      <h1 className="projects-page-title">Projects</h1>
+      <h1 className="page-title">Projects</h1>
+      <CategoryFilter
+        allLabel="All projects"
+        allHref="/projects"
+        items={getRulesetFilterItems()}
+        ariaLabel="Filter projects by ruleset"
+      />
       {projects.length === 0 ? (
-        <p className="projects-empty">No projects yet.</p>
+        <p className="empty-state">No projects yet.</p>
       ) : (
-        <ul className="projects-grid">
+        <CardGrid>
           {projects.map((project) => {
-            const { title, subTitle, excerpt, ruleset, coverImage } =
-              project.frontmatter;
-            const href = `/projects/${project.slug}`;
+            const { title, subTitle, excerpt, ruleset, coverImage } = project;
             return (
-              <li key={project.slug} className="project-card">
-                {coverImage && (
-                  <Link href={href} className="project-card-image-wrap">
-                    <Image
-                      src={coverImage}
-                      alt={title}
-                      width={600}
-                      height={400}
-                      className="project-card-image"
-                    />
-                  </Link>
-                )}
-                <div className="project-card-body">
-                  <h2 className="project-card-title">
-                    <Link href={href}>{title}</Link>
-                  </h2>
-                  {subTitle && (
-                    <p className="project-card-subtitle">{subTitle}</p>
-                  )}
-                  <p className="project-card-ruleset">
-                    <span className="project-card-ruleset-label">Ruleset:</span>{" "}
-                    {ruleset}
-                  </p>
-                  {excerpt && (
-                    <p className="project-card-excerpt">{excerpt}</p>
-                  )}
-                </div>
-              </li>
+              <ContentCard
+                key={project.slug}
+                href={`/projects/${project.slug}`}
+                title={title}
+                image={coverImage}
+                subtitle={subTitle}
+                meta={{ label: "Ruleset", value: ruleset }}
+                excerpt={excerpt}
+              />
             );
           })}
-        </ul>
+        </CardGrid>
       )}
     </div>
   );

@@ -1,32 +1,48 @@
 "use client";
 
-import Link from "next/link";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
-import { SunIcon, MoonIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { navItems } from "@/constants/navigation";
+import { useEffect, useState } from "react";
+
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { SITE_CONFIG } from "@/constants/config";
+import { navItems } from "@/constants/navigation";
+
+const MOBILE_MENU_ID = "nav-mobile-menu";
 
 export function Navbar() {
   const pathname = usePathname();
-  const { resolvedTheme, setTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
+    if (!menuOpen) return;
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMenuOpen(false);
     };
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-  }, []);
+  }, [menuOpen]);
+
+  const renderLink = (
+    item: (typeof navItems)[number],
+    extraClassName?: string,
+  ) => {
+    const isActive = pathname === item.href;
+    return (
+      <Link
+        key={item.href}
+        href={item.href}
+        className={`nav-link ${extraClassName ?? ""} ${isActive ? "font-semibold" : ""}`}
+        target={item.target}
+        aria-current={isActive ? "page" : undefined}
+        onClick={() => setMenuOpen(false)}
+      >
+        {item.name}
+      </Link>
+    );
+  };
 
   return (
     <nav className="nav">
@@ -43,50 +59,20 @@ export function Navbar() {
 
       {/* Desktop nav */}
       <div className="nav-desktop">
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={`nav-link ${pathname === item.href ? "font-semibold" : ""}`}
-            target={item.target}
-          >
-            {item.name}
-          </Link>
-        ))}
-        {mounted && (
-          <button
-            className="nav-button"
-            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-            aria-label="Toggle theme"
-          >
-            {resolvedTheme === "dark" ? (
-              <SunIcon className="nav-theme-icon" />
-            ) : (
-              <MoonIcon className="nav-theme-icon" />
-            )}
-          </button>
-        )}
+        {navItems.map((item) => renderLink(item))}
+        <ThemeToggle />
       </div>
 
       {/* Mobile controls */}
       <div className="nav-mobile-buttons">
-        {mounted && (
-          <button
-            className="nav-button"
-            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-            aria-label="Toggle theme"
-          >
-            {resolvedTheme === "dark" ? (
-              <SunIcon className="nav-theme-icon" />
-            ) : (
-              <MoonIcon className="nav-theme-icon" />
-            )}
-          </button>
-        )}
+        <ThemeToggle />
         <button
+          type="button"
           className="nav-button"
           onClick={() => setMenuOpen((o) => !o)}
-          aria-label="Toggle menu"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls={MOBILE_MENU_ID}
         >
           {menuOpen ? (
             <XMarkIcon className="nav-theme-icon" />
@@ -98,19 +84,9 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="nav-mobile-menu">
+        <div className="nav-mobile-menu" id={MOBILE_MENU_ID}>
           <div className="nav-mobile-menu-inner">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`nav-link py-2 ${pathname === item.href ? "font-semibold" : ""}`}
-                onClick={() => setMenuOpen(false)}
-                target={item.target}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => renderLink(item, "py-2"))}
           </div>
         </div>
       )}

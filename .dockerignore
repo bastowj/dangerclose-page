@@ -1,6 +1,16 @@
 .next
 node_modules
 .git
+.github
 .claude
 memory
 local
+
+# Regenerated during the build; a stale copy would be shadowed anyway.
+.content-collections
+
+# Not needed in the image
+coverage
+.playwright-cli
+*.md
+*.tsbuildinfo

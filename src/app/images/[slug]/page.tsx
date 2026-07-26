@@ -4,7 +4,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
-import { getAllImages, getImageBySlug } from "@/lib/images";
+import { getAllImages, getImageBySlug, imageCategoryHref } from "@/lib/images";
+import { buildMetadata } from "@/lib/metadata";
 import { getProjectBySlug } from "@/lib/projects";
 
 const cachedGetImageBySlug = cache(getImageBySlug);
@@ -12,6 +13,10 @@ const cachedGetImageBySlug = cache(getImageBySlug);
 interface ImagePageProps {
   params: Promise<{ slug: string }>;
 }
+
+// All content is known at build time, so an unknown slug 404s instead of
+// being rendered on demand.
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return getAllImages().map((image) => ({ slug: image.slug }));
@@ -23,10 +28,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const image = cachedGetImageBySlug(slug);
   if (!image) notFound();
-  return {
+  return buildMetadata({
     title: image.caption ?? image.alt,
     description: image.caption ?? image.alt,
-  };
+    path: `/images/${slug}`,
+    image: image.src,
+  });
 }
 
 export default async function ImagePage({ params }: ImagePageProps) {
@@ -55,7 +62,7 @@ export default async function ImagePage({ params }: ImagePageProps) {
         <div className="image-page-meta">
           {project && (
             <Link href={`/projects/${project.slug}`} className="link">
-              {project.frontmatter.title}
+              {project.title}
             </Link>
           )}
           {project && <span>·</span>}
@@ -64,9 +71,13 @@ export default async function ImagePage({ params }: ImagePageProps) {
         {image.categories.length > 0 && (
           <div className="image-page-categories">
             {image.categories.map((category) => (
-              <span key={category} className="image-page-category">
+              <Link
+                key={category}
+                href={imageCategoryHref(category)}
+                className="image-page-category"
+              >
                 {category}
-              </span>
+              </Link>
             ))}
           </div>
         )}

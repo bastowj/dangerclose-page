@@ -17,13 +17,18 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # lint is both gates: eslint --max-warnings 0 and prettier --check.
       - run: pnpm lint
+      - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
   docker:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
       - uses: docker/build-push-action@v6
         with:
           push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

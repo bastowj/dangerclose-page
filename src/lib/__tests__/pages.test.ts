@@ -1,7 +1,8 @@
 type PageDoc = {
   slug: string;
   title: string;
-  description: string;
+  // Mirrors the collection schema: .nullish() yields `string | null | undefined`.
+  description?: string | null;
   body: string;
 };
 
@@ -16,11 +17,7 @@ jest.mock(
   { virtual: true },
 );
 
-import {
-  getStaticPageSlugs,
-  getStaticPageBySlug,
-  getAllStaticPages,
-} from "../pages";
+import { getStaticPageSlugs, getStaticPageBySlug } from "../pages";
 
 beforeEach(() => {
   mockPages.length = 0;
@@ -50,7 +47,7 @@ describe("getStaticPageBySlug", () => {
     });
     const page = getStaticPageBySlug("imprint");
     expect(page?.slug).toBe("imprint");
-    expect(page?.frontmatter.title).toBe("Imprint");
+    expect(page?.title).toBe("Imprint");
   });
 
   it("returns null when the slug is missing", () => {
@@ -58,14 +55,14 @@ describe("getStaticPageBySlug", () => {
   });
 });
 
-describe("getAllStaticPages", () => {
-  it("returns all pages", () => {
-    mockPages.push(
-      { slug: "imprint", title: "Imprint", description: "Site imprint", body: "" },
-      { slug: "contact", title: "Contact", description: "Contact me", body: "" },
-    );
-    const pages = getAllStaticPages();
-    expect(pages).toHaveLength(2);
-    expect(pages.map((p) => p.slug)).toEqual(["imprint", "contact"]);
+describe("page shape", () => {
+  it("normalises an absent description to undefined", () => {
+    mockPages.push({
+      slug: "imprint",
+      title: "Imprint",
+      description: null,
+      body: "",
+    });
+    expect(getStaticPageBySlug("imprint")?.description).toBeUndefined();
   });
 });

@@ -19,7 +19,7 @@ export interface ShowcaseSlide {
   href: string;
 }
 
-export default function Showcase({ slides }: { slides: ShowcaseSlide[] }) {
+export function Showcase({ slides }: { slides: ShowcaseSlide[] }) {
   if (slides.length === 0) return null;
   return (
     <div className="showcase">
@@ -50,9 +50,7 @@ function Slide({ slide }: { slide: ShowcaseSlide }) {
       className="showcase-image"
     />
   );
-  const caption = (
-    <span className="showcase-card-title">{slide.caption}</span>
-  );
+  const caption = <span className="showcase-card-title">{slide.caption}</span>;
   return (
     <div className="showcase-slide">
       <div className="showcase-image-wrap">

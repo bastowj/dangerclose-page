@@ -1,37 +1,37 @@
 import { allProjects } from "content-collections";
 
-export interface ProjectFrontmatter {
+import { assertSafeSlug, findBySlug, slugify } from "@/lib/slug";
+
+export const PROJECTS_RULESET_BASE = "/projects/ruleset";
+
+export interface Project {
+  slug: string;
   title: string;
   subTitle?: string;
   excerpt?: string;
   ruleset: string;
   coverImage?: string;
-}
-
-export interface Project {
-  slug: string;
-  frontmatter: ProjectFrontmatter;
   body: string;
 }
 
 type ProjectDoc = (typeof allProjects)[number];
 
+// content-collections types nullish frontmatter as `T | null | undefined`;
+// normalising to `undefined` keeps optional-property access idiomatic.
 function toProject(doc: ProjectDoc): Project {
   return {
-    slug: doc.slug,
-    frontmatter: {
-      title: doc.title,
-      subTitle: doc.subTitle ?? undefined,
-      excerpt: doc.excerpt ?? undefined,
-      ruleset: doc.ruleset,
-      coverImage: doc.coverImage ?? undefined,
-    },
+    slug: assertSafeSlug(doc.slug, "Project"),
+    title: doc.title,
+    subTitle: doc.subTitle ?? undefined,
+    excerpt: doc.excerpt ?? undefined,
+    ruleset: doc.ruleset,
+    coverImage: doc.coverImage ?? undefined,
     body: doc.body,
   };
 }
 
 export function getProjectSlugs(): string[] {
-  return allProjects.map((doc) => doc.slug);
+  return allProjects.map((doc) => assertSafeSlug(doc.slug, "Project"));
 }
 
 export function getProjectBySlug(slug: string): Project | null {
@@ -52,7 +52,21 @@ export function getAllRulesets(): string[] {
 }
 
 export function getProjectsByRuleset(ruleset: string): Project[] {
-  return getAllProjects().filter(
-    (project) => project.frontmatter.ruleset === ruleset,
-  );
+  return getAllProjects().filter((project) => project.ruleset === ruleset);
+}
+
+export function rulesetHref(ruleset: string): string {
+  return `${PROJECTS_RULESET_BASE}/${slugify(ruleset)}`;
+}
+
+/** Resolves a URL segment back to its ruleset, or null if unknown. */
+export function getRulesetBySlug(slug: string): string | null {
+  return findBySlug(getAllRulesets(), slug);
+}
+
+export function getRulesetFilterItems(): { label: string; href: string }[] {
+  return getAllRulesets().map((label) => ({
+    label,
+    href: rulesetHref(label),
+  }));
 }
