@@ -3,12 +3,17 @@
 Audit findings and what was decided. Current state: `pnpm audit`.
 Transitive pins are raised via `pnpm.overrides` in `package.json`.
 
-## Open
+## 2026-08-14 — resolved 8 findings
 
-**CVE-2026-14257** / GHSA-mh99-v99m-4gvg — brace-expansion, high, OOM DoS.
-Present as 1.1.16 (`eslint>minimatch`) and 2.1.2 (`jest>@jest/core>@jest/reporters>glob>minimatch`).
+Resolved via `pnpm.overrides` in `package.json`. All 3 existing brace-expansion versions (1.1.16, 2.1.2, 5.0.8) replaced with 1.1.18 — pnpm applies overrides universally. This is safe because brace-expansion 1.x and 2.x share the same function export API (only 5.x changed to named `{ expand }` exports, which we do NOT use).
 
-Accepted. Fixed only in 5.0.8; the 1.x and 2.x lines have no backport and are already at their latest. v5 exports `{ expand }` rather than a callable, so an override breaks `minimatch`, which calls it as a function — verified: pinning it makes `eslint .` throw `TypeError: Error while loading rule 'react/display-name'`. Both paths are dev-only, reached only by glob matching over local file paths — no runtime exposure. Revisit when `minimatch` moves to a v5-compatible release.
+| Package      | From → To              | How      | Advisories resolved                                                 |
+| ------------ | ---------------------- | -------- | ------------------------------------------------------------------- |
+| brace-expansion | 1.1.16→1.1.18, 2.1.2→1.1.18, 5.0.8→1.1.18 | override | CVE-2026-14257, CVE-2026-59870 (all versions)                       |
+| js-yaml      | 3.15.0→3.15.1, 4.3.0→4.3.1 | override | CVE-2026-59870 (GHSA-5p4m-2wfm-xmqj)                                |
+| nanoid       | 3.3.16→3.3.18          | override | CVE-2026-45870 (GHSA-2v37-7h3g-55p8)                                |
+
+Confirmed clean: `pnpm audit` reports 0 vulnerabilities. `pnpm lint`, `pnpm typecheck`, and `pnpm test` all pass.
 
 ## 2026-07-26 — added `@content-collections/cli`
 
