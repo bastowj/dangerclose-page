@@ -101,7 +101,10 @@
 
   /* Navbar */
   .nav {
-    @apply relative w-full flex items-center justify-between border-b border-[color:var(--border)] px-8 sm:px-20 py-4;
+    @apply relative w-full border-b border-[color:var(--border)];
+  }
+  .nav-inner {
+    @apply mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4;
   }
   .nav-brand-link {
     @apply flex items-center gap-2 text-xl font-bold;
@@ -116,7 +119,7 @@
     @apply flex items-center gap-2 md:hidden;
   }
   .nav-mobile-menu {
-    @apply absolute top-16 right-0 left-0 bg-background border-b border-[color:var(--border)] z-50 md:hidden;
+    @apply absolute top-full right-0 left-0 z-50 border-b border-[color:var(--border)] bg-background md:hidden;
   }
   .nav-mobile-menu-inner {
     @apply flex flex-col p-4;
@@ -141,10 +144,10 @@
 
   /* Footer */
   .footer {
-    @apply w-full py-8 px-8 sm:px-20 mt-auto border-t border-[color:var(--border)];
+    @apply mt-auto w-full border-t border-[color:var(--border)] py-8;
   }
   .footer-inner {
-    @apply flex flex-col items-center gap-6 sm:flex-row sm:justify-between;
+    @apply mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-4 sm:flex-row sm:justify-between;
   }
   .footer-brand {
     @apply flex flex-col gap-1;
@@ -178,7 +181,7 @@
     @apply text-3xl font-bold mt-4 mb-4;
   }
   .mdx-h2 {
-    @apply text-2xl font-bold mt-10 mb-3;
+    @apply mt-10 mb-6 text-2xl font-bold;
   }
   .mdx-h3 {
     @apply text-xl font-bold mt-6 mb-2;

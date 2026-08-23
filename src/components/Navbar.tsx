@@ -47,42 +47,44 @@ export function Navbar() {
 
   return (
     <nav className="nav" aria-label="Primary navigation">
-      <Link href="/" className="nav-brand-link">
-        <Image
-          src="/avatar.png"
-          alt={SITE_CONFIG.defaultTitle}
-          width={32}
-          height={32}
-          className="nav-brand-avatar"
-        />
-        {SITE_CONFIG.defaultTitle}
-      </Link>
+      <div className="nav-inner">
+        <Link href="/" className="nav-brand-link">
+          <Image
+            src="/avatar.png"
+            alt={SITE_CONFIG.defaultTitle}
+            width={32}
+            height={32}
+            className="nav-brand-avatar"
+          />
+          {SITE_CONFIG.defaultTitle}
+        </Link>
 
-      {/* Desktop nav */}
-      <div className="nav-desktop">
-        {navItems.map((item) => renderLink(item))}
-        <ThemeToggle />
-      </div>
+        {/* Desktop nav */}
+        <div className="nav-desktop">
+          {navItems.map((item) => renderLink(item))}
+          <ThemeToggle />
+        </div>
 
-      {/* Mobile controls */}
-      <div className="nav-mobile-buttons">
-        <ThemeToggle />
-        <button
-          type="button"
-          className="nav-button"
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-label={
-            menuOpen ? "Close navigation menu" : "Open navigation menu"
-          }
-          aria-expanded={menuOpen}
-          aria-controls={MOBILE_MENU_ID}
-        >
-          {menuOpen ? (
-            <XMarkIcon className="nav-theme-icon" />
-          ) : (
-            <Bars3Icon className="nav-theme-icon" />
-          )}
-        </button>
+        {/* Mobile controls */}
+        <div className="nav-mobile-buttons">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="nav-button"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={
+              menuOpen ? "Close navigation menu" : "Open navigation menu"
+            }
+            aria-expanded={menuOpen}
+            aria-controls={MOBILE_MENU_ID}
+          >
+            {menuOpen ? (
+              <XMarkIcon className="nav-theme-icon" />
+            ) : (
+              <Bars3Icon className="nav-theme-icon" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
