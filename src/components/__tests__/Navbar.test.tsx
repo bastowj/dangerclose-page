@@ -29,6 +29,15 @@ describe("Navbar", () => {
     expect(current[0]).toHaveAttribute("href", "/texts");
   });
 
+  it("marks a parent route current for nested pages", () => {
+    mockUsePathname.mockReturnValue("/texts/example-post");
+    render(<Navbar />);
+
+    const current = screen.getAllByRole("link", { current: "page" });
+    expect(current).toHaveLength(1);
+    expect(current[0]).toHaveAttribute("href", "/texts");
+  });
+
   it("renders every nav item", () => {
     render(<Navbar />);
     for (const item of navItems) {

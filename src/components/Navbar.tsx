@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SITE_CONFIG } from "@/constants/config";
 import { navItems } from "@/constants/navigation";
+import { isRouteActive } from "@/lib/navigation";
 
 const MOBILE_MENU_ID = "nav-mobile-menu";
 
@@ -29,7 +30,7 @@ export function Navbar() {
     item: (typeof navItems)[number],
     extraClassName?: string,
   ) => {
-    const isActive = pathname === item.href;
+    const isActive = isRouteActive(pathname, item.href);
     return (
       <Link
         key={item.href}
