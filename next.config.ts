@@ -30,8 +30,14 @@ const securityHeaders = [
   },
 ];
 
+// Vercel's adapter packages the build itself. Its trace processing conflicts
+// with Next's standalone copy step, while local and Docker builds need it.
+const isAdapterBuild = Boolean(
+  process.env.NEXT_ADAPTER_PATH || process.env.VERCEL,
+);
+
 const nextConfig: NextConfig = {
-  output: "standalone",
+  output: isAdapterBuild ? undefined : "standalone",
   async headers() {
     return [
       {

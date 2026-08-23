@@ -3,7 +3,23 @@
 Audit findings and what was decided. Current state: `pnpm audit`.
 Transitive pins are raised via `pnpm.overrides` in `package.json`.
 
+## 2026-08-23 — Vercel build compatibility and dependency refresh
+
+Updated `next` and `eslint-config-next` from 16.2.12 to 16.3.2. The Vercel
+adapter cannot be combined with Next's `output: "standalone"` copy step: it
+consumes the trace files during packaging, after which Next's standalone step
+can fail reading the server trace. `next.config.ts` now disables standalone
+output only when `NEXT_ADAPTER_PATH` or `VERCEL` is set; Docker and local
+production builds retain it.
+
+Refined the advisory overrides so they upgrade only compatible major lines:
+brace-expansion 1.x and 2.x, js-yaml 3.x and 4.x, and nanoid 3.x. In
+particular, brace-expansion 5.x remains untouched because forcing it to 1.x
+breaks ESLint's bundled minimatch dependency. Confirmed clean with `pnpm audit`.
+
 ## 2026-08-14 — resolved 8 findings
+
+Superseded by the scoped, compatible-major overrides recorded on 2026-08-23.
 
 Resolved via `pnpm.overrides` in `package.json`. All 3 existing brace-expansion versions (1.1.16, 2.1.2, 5.0.8) replaced with 1.1.18 — pnpm applies overrides universally. This is safe because brace-expansion 1.x and 2.x share the same function export API (only 5.x changed to named `{ expand }` exports, which we do NOT use).
 
