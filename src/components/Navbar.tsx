@@ -46,7 +46,7 @@ export function Navbar() {
   };
 
   return (
-    <nav className="nav">
+    <nav className="nav" aria-label="Primary navigation">
       <Link href="/" className="nav-brand-link">
         <Image
           src="/avatar.png"
@@ -71,7 +71,9 @@ export function Navbar() {
           type="button"
           className="nav-button"
           onClick={() => setMenuOpen((o) => !o)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-label={
+            menuOpen ? "Close navigation menu" : "Open navigation menu"
+          }
           aria-expanded={menuOpen}
           aria-controls={MOBILE_MENU_ID}
         >

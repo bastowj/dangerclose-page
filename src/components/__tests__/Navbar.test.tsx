@@ -20,6 +20,14 @@ beforeEach(() => {
 });
 
 describe("Navbar", () => {
+  it("labels the primary navigation landmark", () => {
+    render(<Navbar />);
+
+    expect(
+      screen.getByRole("navigation", { name: "Primary navigation" }),
+    ).toBeInTheDocument();
+  });
+
   it("marks only the current route with aria-current", () => {
     mockUsePathname.mockReturnValue("/texts");
     render(<Navbar />);
@@ -51,13 +59,17 @@ describe("Navbar", () => {
     const user = userEvent.setup();
     render(<Navbar />);
 
-    const button = screen.getByRole("button", { name: "Open menu" });
+    const button = screen.getByRole("button", {
+      name: "Open navigation menu",
+    });
     expect(button).toHaveAttribute("aria-expanded", "false");
     expect(button).toHaveAttribute("aria-controls", "nav-mobile-menu");
 
     await user.click(button);
 
-    const open = screen.getByRole("button", { name: "Close menu" });
+    const open = screen.getByRole("button", {
+      name: "Close navigation menu",
+    });
     expect(open).toHaveAttribute("aria-expanded", "true");
     expect(document.getElementById("nav-mobile-menu")).toBeInTheDocument();
   });
@@ -66,7 +78,9 @@ describe("Navbar", () => {
     const user = userEvent.setup();
     render(<Navbar />);
 
-    await user.click(screen.getByRole("button", { name: "Open menu" }));
+    await user.click(
+      screen.getByRole("button", { name: "Open navigation menu" }),
+    );
     expect(document.getElementById("nav-mobile-menu")).toBeInTheDocument();
 
     await user.keyboard("{Escape}");
