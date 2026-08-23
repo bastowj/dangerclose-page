@@ -7,6 +7,7 @@ import { cache } from "react";
 import { MDXContent } from "@/components/MDXContent";
 import { categoryHref, getBlogPostBySlug, getBlogPostSlugs } from "@/lib/blog";
 import { buildMetadata } from "@/lib/metadata";
+import { getBlogPostingJsonLd, serializeJsonLd } from "@/lib/structured-data";
 
 const cachedGetBlogPostBySlug = cache(getBlogPostBySlug);
 
@@ -46,9 +47,14 @@ export default async function TextPage({ params }: TextPageProps) {
   if (!post) notFound();
 
   const { title, date, excerpt, categories, coverImage, author } = post;
+  const jsonLd = getBlogPostingJsonLd(post);
 
   return (
     <article className="main-content-wrapper">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
+      />
       <header className="project-header">
         <h1 className="project-title">{title}</h1>
         <div className="project-meta">
