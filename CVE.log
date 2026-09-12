@@ -3,6 +3,28 @@
 Audit findings and what was decided. Current state: `pnpm audit`.
 Transitive pins are raised via `pnpm.overrides` in `package.json`.
 
+## 2026-09-12 — resolved 7 findings
+
+Updated the direct framework and image dependencies, then refreshed the lockfile.
+`next` and `eslint-config-next` resolve to 16.3.5 (within the new `^16.3.3`
+range) and `sharp` resolves to 0.35.4. The scoped `js-yaml` overrides now
+select 3.15.2 and 4.3.2. `remark-mdx-frontmatter` has no patched 3.x TOML
+release, so its transitive `toml` dependency is overridden to 4.3.0 through
+the compatible `toml: ^4.2.0` override; the parse API used by that dependency
+remains compatible.
+
+| Package | From → To | How | Advisories resolved |
+| --- | --- | --- | --- |
+| next | 16.3.2 → 16.3.5 | dependency refresh | CVE-2026-75604 (GHSA-p293-qw3h-jr36); GHSA-2xp9-vwfh-vxw4 |
+| sharp | 0.35.3 → 0.35.4 | dependency refresh and override | GHSA-rgj7-g3m4-5g8c (libheif; CVE-2026-84383) |
+| js-yaml | 3.15.1 → 3.15.2; 4.3.1 → 4.3.2 | scoped overrides | CVE-2026-84375 (GHSA-2883-xcg3-v3hh) |
+| toml | 3.0.0 → 4.3.0 | override | CVE-2026-77465 (GHSA-82x6-q7mm-w9cf); CVE-2026-63376 (GHSA-v5mp-jgw5-2x6j) |
+
+Confirmed clean: `pnpm audit` reports 0 vulnerabilities. `pnpm lint` and
+`pnpm typecheck` pass. `pnpm test` currently exits 1 because Jest finds no
+tests; this is an existing repository test-script condition, not a failure in
+the dependency update.
+
 ## 2026-08-23 — Vercel build compatibility and dependency refresh
 
 Updated `next` and `eslint-config-next` from 16.2.12 to 16.3.2. The Vercel
