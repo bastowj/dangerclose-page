@@ -50,7 +50,7 @@ export default async function TextPage({ params }: TextPageProps) {
   const jsonLd = getBlogPostingJsonLd(post);
 
   return (
-    <article className="main-content-wrapper">
+    <article className="main-content-wrapper article-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
@@ -78,13 +78,16 @@ export default async function TextPage({ params }: TextPageProps) {
       </header>
 
       {coverImage && (
-        <Image
-          src={coverImage}
-          alt={title}
-          width={1200}
-          height={600}
-          className="blog-cover-image"
-        />
+        <div className="blog-cover-wrap">
+          <Image
+            src={coverImage}
+            alt=""
+            fill
+            sizes="(max-width: 800px) calc(100vw - 32px), 768px"
+            className="blog-cover-image"
+            priority
+          />
+        </div>
       )}
 
       <MDXContent code={post.body} />

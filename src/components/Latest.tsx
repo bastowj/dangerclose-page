@@ -21,12 +21,16 @@ export function Latest() {
             return (
               <li key={post.slug} className="latest-item">
                 {coverImage && (
-                  <Link href={href} className="latest-image-wrap">
+                  <Link
+                    href={href}
+                    className="latest-image-wrap"
+                    aria-label={title}
+                  >
                     <Image
                       src={coverImage}
-                      alt={title}
-                      width={400}
-                      height={300}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) calc(100vw - 32px), (max-width: 1024px) calc((100vw - 112px) / 2), 340px"
                       className="latest-image"
                     />
                   </Link>

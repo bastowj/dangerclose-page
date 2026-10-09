@@ -56,6 +56,27 @@ Always consume the generated `allTexts` / `allProjects` / `allImages` / `allPage
 
 Image taxonomy is **gallery-scoped**: `getAllImageCategories()` and `getImagesByCategory()` only consider images with `gallery: true`, so a category page is always a subset of `/images`. Images excluded from the gallery stay reachable through their project page.
 
+### Article images
+
+Put article images in `public/images/` and reference them with paths such as
+`/images/painted-mini.jpg`. Cover images go in a post's `coverImage` frontmatter.
+The article cover and post previews use a centered 3:2 crop, so choose a photo
+with room around its subject. A source around 1600 × 1067 pixels is a useful
+starting point. One source image serves both the cover and smaller previews.
+
+Images inside MDX keep their original proportions. Their dimensions are read
+from the file automatically at render time. Use Markdown's optional image title
+for a visible caption; alt text should describe the image itself:
+
+```mdx
+![Painted Irish foot soldier holding a spear](/images/irish-soldier.jpg "Finished miniature before basing")
+```
+
+Captions are optional. Inline images must be local files under `public/`.
+Exporting them at roughly 1200–1600 pixels on the long edge is usually enough
+for the article column. The `content/images/` records are for images that also
+need gallery or project pages; an article-only image does not need a record.
+
 **Styling**: Tailwind CSS v4 via PostCSS — no `tailwind.config.*` file, uses v4 defaults. Global styles in `src/app/globals.css`.
 
 **Styling convention**: All component styles are defined as named classes in the `@layer components` block in `globals.css`. Do not use inline Tailwind utility classes directly in JSX for anything beyond trivial one-offs — extract them into a named class in `globals.css` instead.

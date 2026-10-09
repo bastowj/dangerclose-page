@@ -23,12 +23,12 @@ export function ContentCard({
   return (
     <li className="card">
       {image && (
-        <Link href={href} className="card-image-wrap">
+        <Link href={href} className="card-image-wrap" aria-label={title}>
           <Image
             src={image}
-            alt={title}
-            width={600}
-            height={400}
+            alt=""
+            fill
+            sizes="(max-width: 640px) calc(100vw - 80px), 256px"
             className="card-image"
           />
         </Link>

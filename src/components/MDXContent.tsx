@@ -2,6 +2,8 @@ import { MDXContent as MDXContentBase } from "@content-collections/mdx/react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { getImageDimensions } from "@/lib/image-dimensions";
+
 /** Keeps our base class while preserving classes MDX adds (e.g. language-ts). */
 const cx = (base: string, extra?: string) =>
   extra ? `${base} ${extra}` : base;
@@ -48,19 +50,23 @@ const components = {
     }
     return <Link {...props} href={href} className={cx("mdx-a", className)} />;
   },
-  img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
+  img: async (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
     const src = props.src?.toString() || "";
+    const { width, height } = await getImageDimensions(src);
     return (
-      <div className="mdx-img-wrap">
+      <figure className="mdx-img-wrap">
         <Image
           src={src}
           alt={props.alt || ""}
-          width={800}
-          height={450}
+          width={width}
+          height={height}
+          sizes="(max-width: 800px) calc(100vw - 32px), 768px"
           className="mdx-img"
         />
-        {props.alt && <p className="mdx-img-alt">{props.alt}</p>}
-      </div>
+        {props.title && (
+          <figcaption className="mdx-img-caption">{props.title}</figcaption>
+        )}
+      </figure>
     );
   },
   blockquote: ({

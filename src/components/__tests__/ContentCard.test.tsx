@@ -33,9 +33,10 @@ describe("ContentCard", () => {
     expect(container.querySelector(".card-image-wrap")).toBeNull();
   });
 
-  it("renders the cover image with the title as alt text", () => {
-    renderCard({ image: "/images/showcase1.jpg" });
-    expect(screen.getByAltText("A Post")).toBeInTheDocument();
+  it("renders the linked preview as decorative because the title is linked too", () => {
+    const { container } = renderCard({ image: "/images/showcase1.jpg" });
+    expect(container.querySelector(".card-image")).toHaveAttribute("alt", "");
+    expect(screen.getAllByRole("link", { name: "A Post" })).toHaveLength(2);
   });
 
   it("renders subtitle and excerpt when provided", () => {
