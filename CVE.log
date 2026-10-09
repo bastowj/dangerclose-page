@@ -3,6 +3,25 @@
 Audit findings and what was decided. Current state: `pnpm audit`.
 Transitive pins are raised via `pnpm.overrides` in `package.json`.
 
+## 2026-10-10 — patched available findings; 2 remain without upstream fixes
+
+Updated `next` and `eslint-config-next` to 16.4.0, `sharp` to 0.35.5, and
+refreshed the lockfile. Raised compatible-major overrides for
+`brace-expansion` (1.1.21, 2.1.7, and 5.0.12), `handlebars` (4.7.10), and
+`source-map-js` (1.2.2). These changes reduced `pnpm audit` from 23 advisory
+entries (3 critical, 10 high, 9 moderate, 1 low) to 2 (1 high, 1 moderate).
+
+Two advisories have no published patched version:
+
+| Package | Advisory | Dependency path | Decision |
+| --- | --- | --- | --- |
+| braces 3.0.3 | GHSA-vfj7-8cjw-p6xm (high) | `eslint-config-next > @next/eslint-plugin-next > fast-glob > micromatch > braces` | Accepted pending an upstream fix or removal of the dependency. This path is used by the lint tool, not the deployed app. Do not pass untrusted glob patterns to tooling. |
+| sprintf-js 1.0.3 | GHSA-hp3w-g68c-fv3c (moderate) | `@content-collections/core > gray-matter > js-yaml > argparse > sprintf-js`; also reachable through Jest | Accepted pending an upstream fix or removal of the dependency. Content is repository-authored and compiled at build time; the app does not pass visitor-controlled format strings to this path. `pnpm audit --prod` still reports this one finding. |
+
+`pnpm lint`, `pnpm typecheck`, `pnpm test` (91 tests), and
+`pnpm exec next build --webpack` pass. The audit counts are from the full
+dependency tree; the production-only audit reports one moderate finding.
+
 ## 2026-09-12 — resolved 7 findings
 
 Updated the direct framework and image dependencies, then refreshed the lockfile.
