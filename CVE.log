@@ -3,6 +3,15 @@
 Audit findings and what was decided. Current state: `pnpm audit`.
 Transitive pins are raised via `pnpm.overrides` in `package.json`.
 
+## 2026-10-25 — eslint 9 → 10
+
+No new findings. Raised `eslint` to 10.13.0. The `getFilename` crash recorded
+on 2026-07-26 no longer reproduces with `eslint-config-next` 16.4.3; React
+plugin rules still fire (verified with a deliberate `react/jsx-key` error).
+`eslint-plugin-react` 7.37.5 still declares `eslint: ^9.7`, so pnpm reports an
+unmet peer. TypeScript stays at 6: `ts-jest` 29.4.15 requires `<7`, and
+`typescript-eslint` refuses to run on TS 7.
+
 ## 2026-10-25 — minor and patch refresh
 
 No new findings. Raised `react`/`react-dom` to 19.3.1, `swiper` to 14.3.0, and

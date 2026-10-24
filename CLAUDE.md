@@ -113,6 +113,6 @@ Prefer the arbitrary-value form for consistency with the bulk of `globals.css`, 
 
 **Testing**: Jest with two projects, split by extension across the whole of `src/` — `**/__tests__/**/*.test.ts` under node, `**/__tests__/**/*.test.tsx` under jsdom. Keep those globs broad: a narrower one silently collects a file into neither project, so it never runs and never fails. Put a test in the `__tests__` directory next to what it covers. Tests that reach the content layer mock `content-collections` with `{ virtual: true }`, since the generated module only exists after a build.
 
-**Dependency overrides**: `pnpm.overrides` in `package.json` pins vulnerable transitive deps; `CVE.log` records why. `brace-expansion` is deliberately left un-overridden — v5 breaks ESLint's bundled `minimatch@3`. ESLint is held at 9 (`eslint-config-next` bundles a plugin that crashes on 10) and TypeScript at 6 (`ts-jest` requires `<7`).
+**Dependency overrides**: `pnpm.overrides` in `package.json` pins vulnerable transitive deps; `CVE.log` records why. `brace-expansion` is deliberately left un-overridden — v5 breaks ESLint's bundled `minimatch@3`. ESLint 10 runs outside `eslint-plugin-react`'s declared peer range (`^9.7`), so expect a pnpm peer warning; if lint starts crashing after an update, check that plugin first. TypeScript is held at 6: `ts-jest` requires `<7`, and `typescript-eslint` refuses TS 7.
 
 **Path alias**: `@/*` maps to `src/*`.
