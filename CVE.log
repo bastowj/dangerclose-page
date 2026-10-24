@@ -3,6 +3,14 @@
 Audit findings and what was decided. Current state: `pnpm audit`.
 Transitive pins are raised via `pnpm.overrides` in `package.json`.
 
+## 2026-10-25 — minor and patch refresh
+
+No new findings. Raised `react`/`react-dom` to 19.3.1, `swiper` to 14.3.0, and
+the Jest, Testing Library, `@types/react*`, `prettier`, and `ts-jest` dev
+dependencies to their latest minor/patch releases. `pnpm audit` stays at 0.
+Still held at their current majors: `eslint` 9, `typescript` 6 (see below),
+and `@types/node` 25.
+
 ## 2026-10-25 — resolved 8 findings
 
 Updated `next` and `eslint-config-next` to 16.4.3, `zod` to 4.6.7, and
