@@ -3,6 +3,25 @@
 Audit findings and what was decided. Current state: `pnpm audit`.
 Transitive pins are raised via `pnpm.overrides` in `package.json`.
 
+## 2026-10-25 — resolved 8 findings
+
+Updated `next` and `eslint-config-next` to 16.4.3, `zod` to 4.6.7, and
+`@content-collections/core` to 0.15.3, then refreshed the lockfile. Raised the
+`toml` override to `^5.0.1`; 5.x keeps the `parse()` export that
+`remark-mdx-frontmatter` imports, so the major bump is API-compatible.
+
+| Package | From → To | How | Advisories resolved |
+| --- | --- | --- | --- |
+| next | 16.4.0 → 16.4.3 | version bump | GHSA-2464-fhr4-w9xw (critical, SVG image-optimizer RCE); GHSA-673q-mjm6-r5xr (critical, `use cache` RCE); CVE-2026-94482 (GHSA-p3m5-59mp-jv5r, high, Server Actions DoS) |
+| toml | 4.3.0 → 5.0.1 | override | CVE-2026-114141 (GHSA-4qx8-w7c3-pj3p); CVE-2026-114143 (GHSA-9j65-hcg3-gc64); CVE-2026-114144 (GHSA-9qmh-m7c6-f92p) |
+| zod | 4.4.3 → 4.6.7 | version bump | CVE-2023-54404 (GHSA-mrhx-c7xc-m3w5, high) |
+| serialize-javascript | 7.0.7 → 7.1.4 | lockfile refresh, in `@content-collections/core` range | CVE-2026-115897 (GHSA-m5mm-p8h7-m29v, low) |
+
+The two findings accepted on 2026-10-10 (`braces`, `sprintf-js`) no longer
+appear. Confirmed clean: `pnpm audit` reports 0 vulnerabilities. `pnpm lint`,
+`pnpm typecheck`, `pnpm test` (91 tests), and `pnpm exec next build --webpack`
+pass.
+
 ## 2026-10-10 — patched available findings; 2 remain without upstream fixes
 
 Updated `next` and `eslint-config-next` to 16.4.0, `sharp` to 0.35.5, and
