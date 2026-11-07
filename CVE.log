@@ -3,6 +3,27 @@
 Audit findings and what was decided. Current state: `pnpm audit`.
 Transitive pins are raised via `pnpm.overrides` in `package.json`.
 
+## 2026-11-07 — patch refresh, resolved 4 of 5 findings
+
+Raised `next` and `eslint-config-next` to 16.4.5, `tailwindcss` and
+`@tailwindcss/postcss` to 4.3.5, `eslint` to 10.14.0, and `swiper` to 14.4.0.
+`jest` 30.5.2 is already the newest release, so the remaining fixes need
+overrides. Both are major-version jumps and are scoped to the vulnerable
+ranges only. `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test
+--coverage` (which exercises `test-exclude>glob`), and `pnpm build` all pass.
+
+| Package   | From → To                | How      | Advisories resolved              |
+| --------- | ------------------------ | -------- | -------------------------------- |
+| glob      | 10.5.0, 13.0.6 → 14.0.4  | override | GHSA-3g3m-2fjr-6pw4 (moderate)   |
+| minimatch | 9.0.9, 10.2.6 → 11.0.5   | override | GHSA-g3hv-75wg-m249 (moderate)   |
+
+**Accepted (Open):** `deepmerge` 4.3.1, GHSA-gcqx-w48m-w2h4 (low), via
+`jest>@jest/core>jest-config`. No patched release exists. It is dev-only and
+only merges Jest's own config objects, so untrusted input never reaches it.
+
+Still held: `typescript` 6 (`ts-jest` 29.4.15 requires `<7`;
+`typescript-eslint` 8.72.1 requires `<6.1.0`) and `@types/node` 25.
+
 ## 2026-10-25 — eslint 9 → 10
 
 No new findings. Raised `eslint` to 10.13.0. The `getFilename` crash recorded
