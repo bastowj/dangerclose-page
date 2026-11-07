@@ -13,6 +13,7 @@ const eslintConfig = [
       ".content-collections/**",
       "out/**",
       "build/**",
+      "coverage/**",
       "next-env.d.ts",
     ],
   },
